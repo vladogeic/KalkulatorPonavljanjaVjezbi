@@ -1,4 +1,4 @@
-export const IME_APLIKACIJE='Vladio promjeniti'
+export const IME_APLIKACIJE='Vlado promjeniti'
 
 export const RouteNames={
     HOME: '/',
