@@ -1,12 +1,12 @@
 
-import 'bootstrap/dist/css/bootstrapmin.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { Container } from 'react-bootstrap'
 import Izbornik from'./components/Izbornik'
 import { Route,Routes } from 'react-router-dom'
 import Home from  './pages/Home'
-import SmjerPregled from'./pages/smjerovi/SmjerPregled
-import {RouteNames} from '/constants'
+import {RouteNames} from './constants'
+import VjezbaPregled from './pages/vjezbe/VjezbaPregled'
 
 function App() {
   
@@ -18,7 +18,7 @@ function App() {
       <Routes>
         
         <Route  path= {RouteNames.HOME} element ={<Home/>}/>
-        <Route  path= {RouteNames.VJEŽBE} element ={<SmjerPregled/>}/>
+        <Route  path= {RouteNames.VJEZBE} element ={<VjezbaPregled/>}/>
 
 
       </Routes>

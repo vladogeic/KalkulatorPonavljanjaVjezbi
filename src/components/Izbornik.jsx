@@ -1,6 +1,7 @@
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { IME_APLIKACIJE } from "../constants";
 import { useNavigate } from "react-router-dom";
+import { RouteNames } from "../constants";
 
 export default function Izbornik (){
 
@@ -21,8 +22,8 @@ return(
            
             <NavDropdown title="Programi" id="basic-nav-dropdown">
               <NavDropdown.Item
-              onClick={ ()=> navigate(RouteNames.SMJEROVI)} 
-              >Smjerovi</NavDropdown.Item>
+              onClick={ ()=> navigate(RouteNames.VJEZBE)} 
+              >Vježbe</NavDropdown.Item>
               
             </NavDropdown>
           </Nav>
