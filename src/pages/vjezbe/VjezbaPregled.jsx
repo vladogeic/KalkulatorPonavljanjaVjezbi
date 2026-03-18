@@ -1,7 +1,10 @@
 export default function VjezbaPregled() {
     return (
         <>
-    Ovdje dođe pregled Vježbi
+       Squat
+       Bench press
+       Shoulder press
+       Dead lift
 
         </>
     )

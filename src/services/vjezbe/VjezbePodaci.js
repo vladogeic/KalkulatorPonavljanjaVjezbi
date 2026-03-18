@@ -13,12 +13,12 @@ export const vjezbe = [
 
     {
         sifra: 3,
-        naziv: 'Military press',
+        naziv: 'Shoulder press',
         
     },
     {
         sifra: 4,
-        naziv: 'Pull ups'
+        naziv: 'Dead lift'
 
     }
 ]
