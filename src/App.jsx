@@ -23,7 +23,7 @@ function App() {
 
       </Routes>
       <hr />
-      & copy; Kalkulator ponavljanja 
+      &copy; Kalkulator ponavljanja 
     </Container>
     
   )

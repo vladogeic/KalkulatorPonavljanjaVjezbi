@@ -1,10 +1,29 @@
+import { useEffect, useState } from "react"
+import VjezbaService from "../../services/vjezbe/VjezbaService";
+
 export default function VjezbaPregled() {
+
+    const [vjezbe, setVjezbe] = useState([])
+
+    useEffect(()=>{
+        ucitajVjezbe();
+    },[])
+
+
+    async function ucitajVjezbe() {
+        await VjezbaService.get().then((odgovor)=>{
+            setVjezbe(odgovor.data)
+        })
+    }
+
+
     return (
         <>
-       Squat
-       Bench press
-       Shoulder press
-       Dead lift
+            <ul>
+                {vjezbe && vjezbe.map((vjezba)=>(
+                    <li>{vjezba.naziv} </li>
+                ))}
+            </ul>
 
         </>
     )
