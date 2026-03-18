@@ -1,24 +1,25 @@
 export const vjezbe = [
     {
         sifra: 1,
-        naziv: 'Čučanj',
+        naziv: 'Squat',
         
     },
     
     {
         sifra: 2,
-        naziv: 'Potisak',
+        naziv: 'Bench press',
         
-    }
+    },
 
-{
-        sifra: 2,
-        naziv: 'Military',
+    {
+        sifra: 3,
+        naziv: 'Military press',
         
+    },
+    {
+        sifra: 4,
+        naziv: 'Pull ups'
+
     }
-
-
-
-
 ]
     
