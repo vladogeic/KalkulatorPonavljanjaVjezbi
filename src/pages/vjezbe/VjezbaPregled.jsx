@@ -19,11 +19,33 @@ export default function VjezbaPregled() {
 
     return (
         <>
-            <ul>
-                {vjezbe && vjezbe.map((vjezba)=>(
-                    <li>{vjezba.naziv} </li>
+        <Table>
+            <thead>
+                <tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+{vjezbe && vjezbe.map((vjezba)=>(
+                    <tr>
+                        
+                     <td>{vjezba.naziv} </td>
+                     <td>{opis}</td>
+                     <td>
+                        <NumericFormat
+                        displayType={'text'}
+                        />
+                </td>
+
                 ))}
-            </ul>
+                </tbody>
+
+                               
+              </Table>              
 
         </>
     )
