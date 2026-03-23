@@ -40,6 +40,7 @@ export default function VjezbaPregled() {
                         displayType={'text'}
                         />
                 </td>
+                </tr>
 
                 ))}
                 </tbody>
