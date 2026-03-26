@@ -2,8 +2,13 @@ import { vjezbe } from "./VjezbaPodaci";
 
 // 1/4 Read od CRUD
 async function get() {
-    return {data: vjezbe}
+    return {data: [... vjezbe]} //[...vjezbe] je kopija vjezbi
 }
+async function getBySifraname(sifra) {
+    return { data: vjezbe.find (s => s.sifra === parseInt (sifra))}
+    
+}
+//2/4 Create od CDUD
 
 async function dodaj(vjezba) {
     if(vjezbe.length>0){
@@ -14,9 +19,20 @@ async function dodaj(vjezba) {
 
     vjezbe.push(vjezba)
 }
+// 3/4 Update od CRUD
+
+async function promjeni(sifra,VjezbaPodaci) {
+    const index =nadiIndex(sifra)
+    vjezbe[index]= {...vjezbe[index], ...smjer}
+function nadiIndex(sifra){
+    return vjezbe.findIndex(s => s.sifra== parseInt(sifra))
+}
+
 
 
 export default{
     get,
-    dodaj
+    dodaj,
+    getBySifra,
+    promjeni
 }
