@@ -23,7 +23,7 @@ async function dodaj(vjezba) {
 
 async function promjeni(sifra,VjezbaPodaci) {
     const index =nadiIndex(sifra)
-    vjezbe[index]= {...vjezbe[index], ...smjer}
+    vjezbe[index]= {...vjezbe[index], ...smjer}}
 function nadiIndex(sifra){
     return vjezbe.findIndex(s => s.sifra== parseInt(sifra))
 }
@@ -34,5 +34,5 @@ export default{
     get,
     dodaj,
     getBySifra,
-    promjeni
+    promjeni   
 }
