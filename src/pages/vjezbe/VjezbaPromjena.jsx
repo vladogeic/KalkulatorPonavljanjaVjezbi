@@ -29,6 +29,9 @@ export default function VjezbaPromjena() {
     async function promjeni(vjezba) {
         // console.table(vjezba) //ovo je za kontrolu je li sve ok
         await VjezbaService.promjeni(params.sifra, vjezba).then(() => {
+
+
+            
             navigate(RouteNames.VJEZBE)
         })
 

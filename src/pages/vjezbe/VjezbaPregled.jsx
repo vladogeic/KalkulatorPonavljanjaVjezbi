@@ -19,6 +19,19 @@ export default function VjezbaPregled() {
             setVjezbe(odgovor.data)
         })
     }
+    async function obrisi(sifra) {
+        if(!confirm('Sigurno obrisati')){
+            return
+        }
+        await VjezbaService.obrisi(sifra)
+        ucitajVjezbe()
+    }
+
+
+
+
+
+
 
 
     return (
@@ -49,6 +62,15 @@ export default function VjezbaPregled() {
                                <Button onClick={()=>{navigate(`/vjezbe/${vjezba.sifra}`)}}>
                                     Promjena
                                 </Button> 
+                                  &nbsp;&nbsp;
+                                 <Button variant="danger" onClick={()=>{obrisi(vjezba.sifra)}}>
+                                    Obriši
+                                </Button>
+
+
+
+
+
                             </td>
                         </tr>
 

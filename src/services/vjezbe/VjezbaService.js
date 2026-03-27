@@ -1,5 +1,6 @@
 import { vjezbe } from "./VjezbaPodaci";
 
+
 // 1/4 Read od CRUD
 async function get() {
     return {data: [... vjezbe]} //[...vjezbe] je kopija vjezbi
@@ -27,6 +28,16 @@ async function promjeni(sifra,vjezba) {
 function nadiIndex(sifra){
     return vjezbe.findIndex(s => s.sifra== parseInt(sifra))
 }
+// 4/4 Delete od CRUD
+async function obrisi(sifra) {
+    const index = nadiIndex(sifra)
+    vjezbe.splice(index,1)
+}
+
+
+
+
+
 
 
 
@@ -34,5 +45,6 @@ export default{
     get,
     dodaj,
     getBySifra,
-    promjeni   
+    promjeni,
+    obrisi   
 }
