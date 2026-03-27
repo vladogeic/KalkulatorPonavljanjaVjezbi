@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import VjezbaService from "../../services/vjezbe/VjezbaService";
 import { RouteNames } from "../../constants";
-import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Table } from "react-bootstrap";
 
 export default function VjezbaPregled() {
 
+    const navigate = useNavigate()
     const [vjezbe, setVjezbe] = useState([])
 
     useEffect(() => {
@@ -45,7 +46,9 @@ export default function VjezbaPregled() {
                             <td>{vjezba.naziv} </td>
                             <td>{vjezba.opis}</td>
                             <td>
-                                
+                               <Button onClick={()=>{navigate(`/vjezbe/${vjezba.sifra}`)}}>
+                                    Promjena
+                                </Button> 
                             </td>
                         </tr>
 

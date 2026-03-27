@@ -8,6 +8,7 @@ import Home from  './pages/Home'
 import {RouteNames} from './constants'
 import VjezbaPregled from './pages/vjezbe/VjezbaPregled'
 import VjezbaNovi from './pages/vjezbe/VjezbaNovi'
+import VjezbaPromjena from './pages/vjezbe/VjezbaPromjena'
 
 function App() {
   
@@ -21,7 +22,7 @@ function App() {
         <Route  path= {RouteNames.HOME} element ={<Home/>}/>
         <Route  path= {RouteNames.VJEZBE} element ={<VjezbaPregled/>}/>
         <Route  path= {RouteNames.VJEZBE_NOVI} element ={<VjezbaNovi/>}/>
-
+        <Route  path= {RouteNames.VJEZBE_PROMJENA} element ={<VjezbaPromjena/>}/>
 
       </Routes>
       <hr />

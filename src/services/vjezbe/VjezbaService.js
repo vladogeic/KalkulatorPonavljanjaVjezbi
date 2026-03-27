@@ -4,7 +4,7 @@ import { vjezbe } from "./VjezbaPodaci";
 async function get() {
     return {data: [... vjezbe]} //[...vjezbe] je kopija vjezbi
 }
-async function getBySifraname(sifra) {
+async function getBySifra(sifra) {
     return { data: vjezbe.find (s => s.sifra === parseInt (sifra))}
     
 }
@@ -21,9 +21,9 @@ async function dodaj(vjezba) {
 }
 // 3/4 Update od CRUD
 
-async function promjeni(sifra,VjezbaPodaci) {
+async function promjeni(sifra,vjezba) {
     const index =nadiIndex(sifra)
-    vjezbe[index]= {...vjezbe[index], ...smjer}}
+    vjezbe[index]= {...vjezbe[index], ...vjezba}}
 function nadiIndex(sifra){
     return vjezbe.findIndex(s => s.sifra== parseInt(sifra))
 }
