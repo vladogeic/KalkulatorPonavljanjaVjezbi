@@ -1,50 +1,40 @@
-import { vjezbe } from "./VjezbaPodaci";
+
+import VjezbaServiceLocalStorage from "./VjezbaServiceLocalStorage";
+import VjezbaServiceMemorija from "./VjezbaServiceMemorija";
+import { DATA_SOURCE } from "../../constants";
+
+let Servis = null;
 
 
-// 1/4 Read od CRUD
-async function get() {
-    return {data: [... vjezbe]} //[...vjezbe] je kopija vjezbi
-}
-async function getBySifra(sifra) {
-    return { data: vjezbe.find (s => s.sifra === parseInt (sifra))}
-    
-}
-//2/4 Create od CDUD
+switch (DATA_SOURCE) {
+    case 'memorija':
+        Servis = VjezbaServiceMemorija;
+        break;
+    case 'localStorage':
+        Servis = VjezbaServiceLocalStorage;
+        break;
+    default:
+        Servis = null;
 
-async function dodaj(vjezba) {
-    if(vjezbe.length>0){
-        vjezba.sifra = vjezbe[vjezbe.length-1].sifra+1
-    }else{
-        vjezba.sifra=1
-    }
-
-    vjezbe.push(vjezba)
-}
-// 3/4 Update od CRUD
-
-async function promjeni(sifra,vjezba) {
-    const index =nadiIndex(sifra)
-    vjezbe[index]= {...vjezbe[index], ...vjezba}}
-function nadiIndex(sifra){
-    return vjezbe.findIndex(s => s.sifra== parseInt(sifra))
-}
-// 4/4 Delete od CRUD
-async function obrisi(sifra) {
-    const index = nadiIndex(sifra)
-    vjezbe.splice(index,1)
 }
 
 
+const PrazanServis = {
+    get: async () => ({ success: false, data: []}),
+    getBySifra: async (sifra) => ({ success: false, data: {} }),
+    dodaj: async (vjezba) => { console.error("Servis nije učitan"); },
+    promjeni: async (sifra, smjer) => { console.error("Servis nije učitan"); },
+    obrisi: async (sifra) => { console.error("Servis nije učitan"); }
+};
 
+// 3. Jedan jedini export na kraju
+// Ako Servis postoji, koristi njega, inače koristi PrazanServis
+const AktivniServis = Servis || PrazanServis;
 
-
-
-
-
-export default{
-    get,
-    dodaj,
-    getBySifra,
-    promjeni,
-    obrisi   
-}
+export default {
+    get: () => AktivniServis.get(),
+    getBySifra: (sifra) => AktivniServis.getBySifra(sifra),
+    dodaj: (vjezba) => AktivniServis.dodaj(vjezba),
+    promjeni: (sifra, vjezba) => AktivniServis.promjeni(sifra, vjezba),
+    obrisi: (sifra) => AktivniServis.obrisi(sifra)
+};

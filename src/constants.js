@@ -6,3 +6,6 @@ export const RouteNames={
     VJEZBE_NOVI: '/vjezbe/novi',
     VJEZBE_PROMJENA: '/vjezbe/:sifra' 
 }
+
+// memorija, localStorage, firebase
+export const DATA_SOURCE = 'localStorage';
