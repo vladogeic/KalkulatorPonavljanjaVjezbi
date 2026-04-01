@@ -24,6 +24,10 @@ return(
               <NavDropdown.Item
               onClick={ ()=> navigate(RouteNames.VJEZBE)} 
               >Vježbe</NavDropdown.Item>
+
+              <NavDropdown.Item
+               onClick={()=>navigate(RouteNames.KORISNICI)}
+               >Korisnici</NavDropdown.Item>
               
             </NavDropdown>
           </Nav>

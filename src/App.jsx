@@ -9,6 +9,11 @@ import {RouteNames} from './constants'
 import VjezbaPregled from './pages/vjezbe/VjezbaPregled'
 import VjezbaNovi from './pages/vjezbe/VjezbaNovi'
 import VjezbaPromjena from './pages/vjezbe/VjezbaPromjena'
+import PolaznikPregled from './pages/korisnici/KorisnikPregled'
+import PolaznikNovi from './pages/korisnici/KorisnikNovi'
+import PolaznikPromjena from './pages/korisnici/KorisnikPromjena'
+
+
 
 function App() {
   
