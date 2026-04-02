@@ -9,10 +9,9 @@ import {RouteNames} from './constants'
 import VjezbaPregled from './pages/vjezbe/VjezbaPregled'
 import VjezbaNovi from './pages/vjezbe/VjezbaNovi'
 import VjezbaPromjena from './pages/vjezbe/VjezbaPromjena'
-import PolaznikPregled from './pages/korisnici/KorisnikPregled'
-import PolaznikNovi from './pages/korisnici/KorisnikNovi'
-import PolaznikPromjena from './pages/korisnici/KorisnikPromjena'
-
+import KorisnikPregled from './pages/korisnici/KorisnikPregled'
+import KorisnikNovi from './pages/korisnici/KorisnikNovi'
+import KorisnikPromjena from './pages/Korisnici/KorisnikPromjena'
 
 
 function App() {
@@ -28,6 +27,10 @@ function App() {
         <Route  path= {RouteNames.VJEZBE} element ={<VjezbaPregled/>}/>
         <Route  path= {RouteNames.VJEZBE_NOVI} element ={<VjezbaNovi/>}/>
         <Route  path= {RouteNames.VJEZBE_PROMJENA} element ={<VjezbaPromjena/>}/>
+
+        <Route  path= {RouteNames.KORISNICI} element ={<KorisnikPregled />}/>
+        <Route  path= {RouteNames.KORISNICI_NOVI} element ={<KorisnikNovi/>}/>
+        <Route  path= {RouteNames.KORISNICI_PROMJENA} element ={<KorisnikPromjena/>}/>
 
       </Routes>
       <hr />

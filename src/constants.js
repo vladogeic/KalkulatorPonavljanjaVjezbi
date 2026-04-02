@@ -9,7 +9,7 @@ export const RouteNames={
 
     KORISNICI: '/korisnici',
     KORISNICI_NOVI: '/korisnici/novi',
-    POLAZNICI_PROMJENA: '/korisnici/:sifra', 
+    KORISNICI_PROMJENA: '/korisnici/:sifra', 
 }
 
 // memorija, localStorage, firebase

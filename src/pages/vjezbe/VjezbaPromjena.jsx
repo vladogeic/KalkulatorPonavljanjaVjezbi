@@ -46,6 +46,55 @@ export default function VjezbaPromjena() {
     function odradiSubmit(e) { // e je event
         e.preventDefault(); //nemoj odraditi submit
         const podaci = new FormData(e.target)
+
+        
+        // --- KONTROLA 1: Naziv (Postojanje) ---
+        if (!podaci.get('naziv') || podaci.get('naziv').trim().length === 0) {
+            alert("Naziv je obavezan i ne smije sadržavati samo razmake!")
+            return // Prekid
+        }
+
+        // --- KONTROLA 2: Naziv (Minimalna duljina) ---
+        if (podaci.get('naziv').trim().length < 3) {
+            alert("Naziv smjera mora imati najmanje 3 znaka!")
+            return // Prekid
+        }
+
+        // --- KONTROLA 3: Trajanje (Logički raspon) ---
+        // Provjera je li broj i je li unutar zadanih granica (npr. 1 - 500 sati)
+        if (isNaN(podaci.get('trajanje')) || podaci.get('trajanje') < 1 || podaci.get('trajanje') > 500) {
+            alert("Trajanje mora biti broj između 1 i 500 sati!")
+            return // Prekid
+        }
+
+        if (!podaci.get('cijena') || podaci.get('cijena') === "") {
+            alert("Obavezno cijena smjera!")
+            return
+        }
+
+        // --- KONTROLA 4: Upisnina (Negativne vrijednosti) ---
+        if (podaci.get('cijena') < 0) {
+            alert("Cijena ne može biti negativan broj!")
+            return // Prekid
+        }
+
+        if (!podaci.get('datumPokretanja') || podaci.get('datumPokretanja') === "") {
+            alert("Morate odabrati datum pokretanja!")
+            return
+        }
+
+        // B) Logička provjera: Datum ne smije biti u prošlosti
+        const odabraniDatum = new Date(podaci.get('datumPokretanja'))
+        const danas = new Date()
+        danas.setHours(0, 0, 0, 0) // Resetiramo vrijeme na ponoć radi točne usporedbe datuma
+
+        if (odabraniDatum < danas) {
+            alert("Datum pokretanja ne može biti u prošlosti!")
+            return
+        }
+
+
+
         promjeni({
             naziv: podaci.get('naziv'),
             opis: parseInt(podaci.get('opis'))

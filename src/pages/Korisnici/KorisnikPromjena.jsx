@@ -1,9 +1,8 @@
-@ -0,0 +1,144 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import KorisnikService from "../../services/korisnici/KorisnikService"
 import { Button, Col, Form, Row } from "react-bootstrap"
 import { RouteNames } from "../../constants"
+import KorisnikService from "../../services/korisnik/KorisnikService"
 
 export default function KorisnikPromjena(){
 
@@ -70,7 +69,7 @@ export default function KorisnikPromjena(){
         //if (!emailRegex.test(podaci.get('email'))) {
           //  alert("Email nije u ispravnom formatu!");
            // return;
-        }
+       // }
 
         // --- KONTROLA 7: OIB (Postojanje) ---
         if (!podaci.get('oib') || podaci.get('oib').trim().length === 0) {
@@ -123,7 +122,7 @@ export default function KorisnikPromjena(){
                 <Form.Group controlId="oib">
                     <Form.Label>OIB</Form.Label>
                     <Form.Control type="text" name="oib" required maxLength={11}
-                    defaultValue={polaznik.oib}/>
+                    defaultValue={korisnik.oib}/>
                 </Form.Group>
 
                 <Row className="mt-4">

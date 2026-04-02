@@ -1,7 +1,7 @@
 import { Button, Col, Form, Row } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate } from "react-router-dom"
-import KorisnikService from "../../services/korisnici/KorisnikService"
+import KorisnikService from "../../services/korisnik/KorisnikService"
 
 export default function KorisnikNovi(){
 
@@ -30,29 +30,29 @@ export default function KorisnikNovi(){
         }
 
         // --- KONTROLA 3: Prezime (Postojanje) ---
-        if (!podaci.get('težina korisnika') || podaci.get('težina korisnika').trim().length === 0) {
-            alert("Težina je obavezno izraženo u kg!");
+        if (!podaci.get('tezina') || podaci.get('tezina').trim().length === 0) {
+            alert("Težina je obavezno ");
             return;
         }
 
         // --- KONTROLA 4: Prezime (Minimalna duljina) ---
-        if (podaci.get('prezime').trim().length < 2) {
-            alert("Prezime mora imati najmanje 2 znaka!");
-            return;
-        }
+        // if (podaci.get('prezime').trim().length < 2) {
+        //     alert("Prezime mora imati najmanje 2 znaka!");
+        //     return;
+        // }
 
         // --- KONTROLA 5: Email (Postojanje) ---
-        if (!podaci.get('email') || podaci.get('email').trim().length === 0) {
-            alert("Email je obavezan!");
-            return;
-        }
+        // if (!podaci.get('email') || podaci.get('email').trim().length === 0) {
+        //     alert("Email je obavezan!");
+        //     return;
+        // }
 
         // --- KONTROLA 6: Email (Format) ---
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(podaci.get('email'))) {
-            alert("Email nije u ispravnom formatu!");
-            return;
-        }
+        // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // if (!emailRegex.test(podaci.get('email'))) {
+        //     alert("Email nije u ispravnom formatu!");
+        //     return;
+        // }
 
         // --- KONTROLA 7: OIB (Postojanje) ---
         if (!podaci.get('oib') || podaci.get('oib').trim().length === 0) {
@@ -74,8 +74,8 @@ export default function KorisnikNovi(){
 
         dodaj({
             ime: podaci.get('ime'),
-            prezime: podaci.get('spol'),
-            email: podaci.get('težina'),
+            spol: podaci.get('spol'),
+            tezina: parseInt(podaci.get('tezina')),
             oib: podaci.get('oib')
         })
     }
@@ -94,9 +94,9 @@ export default function KorisnikNovi(){
                     <Form.Control type="text" name="spol" required />
                 </Form.Group>
 
-                <Form.Group controlId="težina">
+                <Form.Group controlId="tezina">
                     <Form.Label>Težina</Form.Label>
-                    <Form.Control type="number" name="težina" required />
+                    <Form.Control type="number" name="tezina" required />
                 </Form.Group>
 
                 <Form.Group controlId="oib">

@@ -1,9 +1,8 @@
-
 import { useEffect, useState } from "react"
-import KorisnikService from "../../services/korisnici/KorisnikService"
 import { Button, Table } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
+import KorisnikService from "../../services/korisnik/KorisnikService"
 
 export default function KorisnikPregled(){
 
@@ -54,7 +53,7 @@ export default function KorisnikPregled(){
                     <tr key={korisnik.sifra}>
                         <td className="lead">{korisnik.ime}</td>
                         <td className="lead">{korisnik.spol}</td>
-                        <td>{korisnik.težina}</td>
+                        <td>{korisnik.tezina}</td>
                         <td>{korisnik.oib}</td>
                         <td>
                             <Button onClick={()=>{navigate(`/korisnici/${korisnik.sifra}`)}}>
