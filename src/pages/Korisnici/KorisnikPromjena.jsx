@@ -46,19 +46,19 @@ export default function KorisnikPromjena(){
             return;
         }
 
-        // --- KONTROLA 3: Prezime (Postojanje) ---
+        // --- KONTROLA 3: Spol (Postojanje) ---
         if (!podaci.get('spol') || podaci.get('spol').trim().length === 0) {
             alert("Spol je obavezan !");
             return;
         }
 
-        // --- KONTROLA 4: Prezime (Minimalna duljina) ---
+        // --- KONTROLA 4: Spol (Minimalna duljina) ---
         if (podaci.get('spol').trim().length < 1) {
             alert("Spol mora imati najmanje 1 znak!");
             return;
         }
 
-        // --- KONTROLA 5: Email (Postojanje) ---
+        // --- KONTROLA 5: Težina (Postojanje) ---
         if (!podaci.get('težina') || podaci.get('težina').trim().length === 0) {
             alert("Težina je obavezna!");
             return;
