@@ -13,6 +13,12 @@ import KorisnikPregled from './pages/korisnici/KorisnikPregled'
 import KorisnikNovi from './pages/korisnici/KorisnikNovi'
 import KorisnikPromjena from './pages/Korisnici/KorisnikPromjena'
 
+import TreningPregled from './pages/treninzi/TreningPregled'
+import TreningNovi from './pages/treninzi/TreningNovi'
+import TreningPromjena from './pages/treninzi/TreningPromjena'
+
+
+
 
 function App() {
   
@@ -31,6 +37,14 @@ function App() {
         <Route  path= {RouteNames.KORISNICI} element ={<KorisnikPregled />}/>
         <Route  path= {RouteNames.KORISNICI_NOVI} element ={<KorisnikNovi/>}/>
         <Route  path= {RouteNames.KORISNICI_PROMJENA} element ={<KorisnikPromjena/>}/>
+
+
+        <Route path={RouteNames.TRENINZI} element={<TreningPregled />} />
+        <Route path={RouteNames.TRENINZI_NOVI} element={<TreningNovi />} />
+        <Route path={RouteNames.TRENINZI_PROMJENA} element={<TreningPromjena />} />
+
+
+
 
       </Routes>
       <hr />

@@ -10,6 +10,14 @@ export const RouteNames={
     KORISNICI: '/korisnici',
     KORISNICI_NOVI: '/korisnici/novi',
     KORISNICI_PROMJENA: '/korisnici/:sifra', 
+   
+    TRENINZI: '/treninzi',
+    TRENINZI_NOVI: '/treninzi/novi',
+    TRENINZI_PROMJENA: '/treninzi/:sifra'
+
+
+
+
 }
 
 // memorija, localStorage, firebase
