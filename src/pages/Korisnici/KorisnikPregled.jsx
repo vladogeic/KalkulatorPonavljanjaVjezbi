@@ -41,8 +41,8 @@ export default function KorisnikPregled(){
         <Table striped bordered hover>
             <thead>
                 <tr>
-                    <th>Ime</th>
                     <th>Spol</th>
+                    <th>Ime</th>
                     <th>Težina</th>
                     <th>OIB</th>
                     <th>Akcija</th>
@@ -51,8 +51,8 @@ export default function KorisnikPregled(){
             <tbody>
                 {korisnici && korisnici.map((korisnik)=>(
                     <tr key={korisnik.sifra}>
-                        <td className="lead">{korisnik.ime}</td>
                         <td className="lead">{korisnik.spol}</td>
+                        <td className="lead">{korisnik.ime}</td>
                         <td>{korisnik.tezina}</td>
                         <td>{korisnik.oib}</td>
                         <td>
