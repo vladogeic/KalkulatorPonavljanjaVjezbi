@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import VjezbaService from "../../services/vjezbe/VjezbaService";
@@ -32,38 +32,9 @@ export default function VjezbaNovi() {
             return // Prekid
         }
 
-        // --- KONTROLA 3: Trajanje (Logički raspon) ---
-        // Provjera je li broj i je li unutar zadanih granica (npr. 1 - 500 sati)
-        if (isNaN(podaci.get('opis')) || podaci.get('opis') < 1 || podaci.get('opis') > 500) {
-            alert("Opis mora biti broj između 1 i 500 sati!")
-            return // Prekid
-        }
+      
 
-       // if (!podaci.get('cijena') || podaci.get('cijena') === "") {
-         //   alert("Obavezno cijena smjera!")
-           // return
-       // }
-
-        // --- KONTROLA 4: Upisnina (Negativne vrijednosti) ---
-        //if (podaci.get('cijena') < 0) {
-          //  alert("Cijena ne može biti negativan broj!")
-           // return // Prekid
-       // }
-
-        if (!podaci.get('datumPokretanja') || podaci.get('datumPokretanja') === "") {
-            alert("Morate odabrati datum pokretanja!")
-            return
-        }
-
-        // B) Logička provjera: Datum ne smije biti u prošlosti
-        const odabraniDatum = new Date(podaci.get('datumPokretanja'))
-        const danas = new Date()
-        danas.setHours(0, 0, 0, 0) // Resetiramo vrijeme na ponoć radi točne usporedbe datuma
-
-        if (odabraniDatum < danas) {
-            alert("Datum pokretanja ne može biti u prošlosti!")
-            return
-        }
+      
 
 
         dodaj({
@@ -91,7 +62,7 @@ export default function VjezbaNovi() {
 
                             {/* Naziv - Pun širina na svim ekranima */}
                             <Row>
-                                <Col xs={12}>
+                                <Col>
                                     <Form.Group controlId="naziv" className="mb-3">
                                         <Form.Label className="fw-bold">Naziv</Form.Label>
                                         <Form.Control
@@ -102,59 +73,19 @@ export default function VjezbaNovi() {
                                         />
                                     </Form.Group>
                                 </Col>
-                            </Row>
-
-                            {/* Trajanje i Cijena - Jedno pored drugog na md+, jedno ispod drugog na mobitelu */}
-                            <Row>
-                                <Col md={6}>
+                                <Col>
                                     <Form.Group controlId="opis" className="mb-3">
                                         <Form.Label className="fw-bold">Opis</Form.Label>
                                         <Form.Control
-                                            type="number"
+                                            type="text"
                                             name="opis"
-                                            step={1}
-                                            placeholder="0"
-                                        />
-                                    </Form.Group>
-                                </Col>
-                                <Col md={6}>
-                                    <Form.Group controlId="cijena" className="mb-3">
-                                        <Form.Label className="fw-bold">Cijena (€)</Form.Label>
-                                        <Form.Control
-                                            type="number"
-                                            name="cijena"
-                                            step={0.01}
-                                            placeholder="0,00"
+                                            placeholder="Upišite opis vježbe"
                                         />
                                     </Form.Group>
                                 </Col>
                             </Row>
 
-                            <Row className="align-items-center">
-                                {/* Datum pokretanja */}
-                                <Col md={6}>
-                                    <Form.Group controlId="datumPokretanja" className="mb-3">
-                                        <Form.Label className="fw-bold">Datum pokretanja</Form.Label>
-                                        <Form.Control type="date" name="datumPokretanja" 
-                                        // Dodajemo onClick i onFocus za bolju pristupačnost
-                                        onClick={(e) => e.target.showPicker()} 
-                                        onFocus={(e) => e.target.showPicker()}
-                                        />
-                                    </Form.Group>
-                                </Col>
-
-                                {/* Aktivan - Switch umjesto checkboxa za moderniji izgled */}
-                                <Col md={6}>
-                                    <Form.Group controlId="aktivan" className="mb-3 mt-md-3">
-                                        <Form.Check
-                                            type="switch"
-                                            label="Smjer je aktivan"
-                                            name="aktivan"
-                                            className="fs-5"
-                                        />
-                                    </Form.Group>
-                                </Col>
-                            </Row>
+                            
 
                             <hr />
 

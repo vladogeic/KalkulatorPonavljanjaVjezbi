@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Button, Col, Form, Row } from "react-bootstrap"
 import { RouteNames } from "../../constants"
-import KorisnikService from "../../services/korisnik/KorisnikService"
+import KorisnikService from "../../services/korisnici/KorisnikService"
 
 export default function KorisnikPromjena(){
 

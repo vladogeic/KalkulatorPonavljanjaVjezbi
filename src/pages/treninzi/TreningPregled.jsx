@@ -28,7 +28,7 @@ export default function TreningPregled(){
         })
     }
 
-    async function ucitajVjezbe() {
+    async function ucitajKorisnike() {
         await KorisnikService.get().then((odgovor)=>{
             if(!odgovor.success){
                 alert('Nije implementiran servis za korisnike')
@@ -46,9 +46,9 @@ export default function TreningPregled(){
         })
     }
 
-    function dohvatiNazivVjezbe(sifraVjezbe) {
-        const korisnik = korisnici.find(s => s.sifra === sifraKorisnici)
-        return korisnik ? korisnik.naziv : 'Nepoznat korisnik'
+    function dohvatiKorisnikPodaci(sifraKorisnik) {
+        const korisnik = korisnici.find(s => s.sifra === sifraKorisnik)
+        return korisnik ? korisnik.ime : 'Nepoznat korisnik'
     }
 
     return(
@@ -61,15 +61,15 @@ export default function TreningPregled(){
             <thead>
                 <tr>
                     <th>Naziv</th>
-                    <th>Vjezba</th>
+                    <th>Korisnik</th>
                     <th>Akcija</th>
                 </tr>
             </thead>
             <tbody>
-                {treninzi && treninzi.map((grupa)=>(
+                {treninzi && treninzi.map((trening)=>(
                     <tr key={trening.sifra}>
                         <td className="lead">{trening.naziv}</td>
-                        <td>{dohvatiNazivSmjera(trening.smjer)}</td>
+                        <td>{dohvatiKorisnikPodaci(trening.korisnik)}</td>
                         <td>
                             <Button onClick={()=>{navigate(`/treninzi/${trening.sifra}`)}}>
                                 Promjeni

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Button, Table } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
-import KorisnikService from "../../services/korisnik/KorisnikService"
+import KorisnikService from "../../services/korisnici/KorisnikService"
 
 export default function KorisnikPregled(){
 
