@@ -3,27 +3,27 @@
 export const treninzi = [
     {
         sifra: 1,
-        naziv: 'Radi se intenzivno',
+        naziv: 'Trenig elitne razine',
         korisnik: 1
     },
     {
         sifra: 2,
-        naziv: 'Grupa 2 - Web programiranje',
+        naziv: 'Napredni trening',
         korisnik: 1
     },
     {
         sifra: 3,
-        naziv: 'Grupa 1 - Java programiranje',
+        naziv: 'Trening srednjeg intenziteta',
         korisnik: 2
     },
     {
         sifra: 4,
-        naziv: 'Grupa 1 - Python programiranje',
+        naziv: 'Jači početnički trening',
         korisnik: 3
     },
     {
         sifra: 5,
-        naziv: 'Grupa 1 - Sistemski administrator',
+        naziv: 'Početnički trening',
         korisnik: 4
     }
 ]
