@@ -75,7 +75,7 @@ export default function TreningPromjena(){
 
         promjeni({
             naziv: podaci.get('naziv'),
-            smjer: odabraniSmjer
+            korisnik: odabraniKorisnik
         })
     }
 
@@ -109,11 +109,11 @@ export default function TreningPromjena(){
                                 <Col xs={12}>
                                     <Form.Group controlId="korisnik" className="mb-3">
                                         <Form.Label className="fw-bold">Korisnik</Form.Label>
-                                        <Form.Select name="korisnik" required value={trening.smjer || ''} onChange={(e) => setTrening({...trening, korisnik: parseInt(e.target.value)})}>
+                                        <Form.Select name="korisnik" required value={trening.korisnik || ''} onChange={(e) => setTrening({...trening, korisnik: parseInt(e.target.value)})}>
                                             <option value="">Odaberite korisnik</option>
                                             {korisnici && korisnici.map((korisnik) => (
                                                 <option key={korisnik.sifra} value={korisnik.sifra}>
-                                                    {korisnik.naziv}
+                                                    {korisnik.ime}
                                                 </option>
                                             ))}
                                         </Form.Select>

@@ -42,7 +42,7 @@ export default function TreningNovi() {
 
         // --- KONTROLA 2: Naziv (Minimalna duljina) ---
         if (podaci.get('naziv').trim().length < 3) {
-            alert("Naziv grupe mora imati najmanje 3 znaka!");
+            alert("Naziv treninga mora imati najmanje 3 znaka!");
             return;
         }
 
@@ -98,7 +98,7 @@ export default function TreningNovi() {
                                             <option value="">Odaberite korisnika</option>
                                             {korisnici && korisnici.map((korisnik) => (
                                                 <option key={korisnik.sifra} value={korisnik.sifra}>
-                                                    {korisnik.naziv}
+                                                    {korisnik.ime}
                                                 </option>
                                             ))}
                                         </Form.Select>

@@ -59,7 +59,7 @@ export default function KorisnikPromjena(){
         }
 
         // --- KONTROLA 5: Težina (Postojanje) ---
-        if (!podaci.get('težina') || podaci.get('težina').trim().length === 0) {
+        if (!podaci.get('tezina') || podaci.get('tezina').trim().length === 0) {
             alert("Težina je obavezna!");
             return;
         }
@@ -92,7 +92,7 @@ export default function KorisnikPromjena(){
         promjeni({
             ime: podaci.get('ime'),
             spol: podaci.get('spol'),
-            težina: podaci.get('težina'),
+            tezina: podaci.get('tezina'),
             oib: podaci.get('oib')
         })
     }
@@ -113,10 +113,10 @@ export default function KorisnikPromjena(){
                     defaultValue={korisnik.spol}/>
                 </Form.Group>
 
-                <Form.Group controlId="težina">
+                <Form.Group controlId="tezina">
                     <Form.Label>Težina</Form.Label>
-                    <Form.Control type="težina" name="težina" required 
-                    defaultValue={korisnik.težina}/>
+                    <Form.Control type="tezina" name="tezina" required 
+                    defaultValue={korisnik.tezina}/>
                 </Form.Group>
 
                 <Form.Group controlId="oib">

@@ -12,11 +12,11 @@ async function getBySifra(sifra) {
 }
 
 // 2/4 Create od CRUD
-async function dodaj(grupa){
+async function dodaj(trening){
     if(treninzi.length===0){
         trening.sifra=1
     }else{
-        grupa.sifra = treninzi[treninzi.length - 1].sifra + 1
+        trening.sifra = treninzi[treninzi.length - 1].sifra + 1
     }
     
     treninzi.push(trening)
@@ -25,7 +25,7 @@ async function dodaj(grupa){
 // 3/4 Update od CRUD
 async function promjeni(sifra,trening) {
     const index = nadiIndex(sifra)
-    grupe[index] = {...treninzi[index], ...trening}
+    treninzi[index] = {...treninzi[index], ...trening}
 }
 
 function nadiIndex(sifra){

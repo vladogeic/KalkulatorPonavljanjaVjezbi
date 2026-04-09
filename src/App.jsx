@@ -11,7 +11,7 @@ import VjezbaNovi from './pages/vjezbe/VjezbaNovi'
 import VjezbaPromjena from './pages/vjezbe/VjezbaPromjena'
 import KorisnikPregled from './pages/korisnici/KorisnikPregled'
 import KorisnikNovi from './pages/korisnici/KorisnikNovi'
-import KorisnikPromjena from './pages/Korisnici/KorisnikPromjena'
+import KorisnikPromjena from './pages/korisnici/KorisnikPromjena'
 
 import TreningPregled from './pages/treninzi/TreningPregled'
 import TreningNovi from './pages/treninzi/TreningNovi'

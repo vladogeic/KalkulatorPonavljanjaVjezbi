@@ -27,7 +27,7 @@ async function getBySifra(sifra) {
 
 // 2/4 Create - dodaj novi
 async function dodaj(trening) {
-    const grupe = dohvatiSveIzStorage();
+    const treninzi = dohvatiSveIzStorage();
     
     if (treninzi.length === 0) {
         trening.sifra = 1;
