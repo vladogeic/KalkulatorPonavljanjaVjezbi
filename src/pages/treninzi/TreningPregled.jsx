@@ -84,5 +84,7 @@ export default function TreningPregled(){
             </tbody>
         </Table>
         </>
+
+        
     )
 }
