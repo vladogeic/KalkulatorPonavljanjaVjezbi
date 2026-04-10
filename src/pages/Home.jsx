@@ -1,5 +1,5 @@
 import { IME_APLIKACIJE } from "../constants";
-import slika from '../assets/edunova.svg'
+import slika from '../assets/david.jpg'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import { Col, Row, Card } from "react-bootstrap";
 import { useState, useEffect } from "react";
@@ -10,6 +10,7 @@ import TreningService from "../services/treninzi/TreningService";
 export default function Home() {
     const [brojTreninga, setBrojTrening] = useState(0);
     const [animatedTreninga, setAnimatedTreninga] = useState(0);
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,6 +36,10 @@ export default function Home() {
             return () => clearTimeout(timer);
         }
     }, [animatedTreninga, brojTreninga]);
+
+
+      
+           
    
     
    
