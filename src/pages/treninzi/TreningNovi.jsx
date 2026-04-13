@@ -76,7 +76,7 @@ export default function TreningNovi() {
 
                             {/* Naziv - Pun širina na svim ekranima */}
                             <Row>
-                                <Col xs={12}>
+                                <Col lg={6}>
                                     <Form.Group controlId="naziv" className="mb-3">
                                         <Form.Label className="fw-bold">Naziv</Form.Label>
                                         <Form.Control
@@ -86,12 +86,7 @@ export default function TreningNovi() {
                                             required
                                         />
                                     </Form.Group>
-                                </Col>
-                            </Row>
 
-                            {/* Smjer - Select dropdown */}
-                            <Row>
-                                <Col xs={12}>
                                     <Form.Group controlId="korisnik" className="mb-3">
                                         <Form.Label className="fw-bold">Korisnik</Form.Label>
                                         <Form.Select name="korisnik" required>
@@ -103,6 +98,10 @@ export default function TreningNovi() {
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
+                                </Col>
+                           
+                                <Col lg={6}>
+                                    vježbe
                                 </Col>
                             </Row>
 
