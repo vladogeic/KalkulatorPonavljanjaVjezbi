@@ -4,15 +4,36 @@ import { RouteNames } from "../../constants"
 import { Link, useNavigate } from "react-router-dom"
 import TreningService from "../../services/treninzi/TreningService"
 import KorisnikService from "../../services/korisnici/KorisnikService"
+import VjezbaService from "../../services/vjezbe/VjezbaService"
 
 export default function TreningNovi() {
 
     const navigate = useNavigate()
     const [korisnici, setKorisnici] = useState([])
 
+    const [vjezbe, setVjezbe] = useState([])
+    const [odabraneVjezbe, setOdabraneVjezbe] = useState([])
+    const [pretragaVjezbe, setPretragaVjezbe] = useState('')
+    const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
+    const [odabraniIndex, setOdabraniIndex] = useState(-1)
+
     useEffect(() => {
         ucitajKorisnike()
+        ucitajVjezbe();
     }, [])
+
+    async function ucitajVjezbe() {
+            await VjezbaService.get().then((odgovor) => {
+    
+                            if(!odgovor.success){
+                    alert('Nije implementiran servis')
+                    return
+                }
+    
+    
+                setVjezbe(odgovor.data)
+            })
+        }
 
     async function ucitajKorisnike() {
         await KorisnikService.get().then((odgovor) => {
@@ -22,6 +43,49 @@ export default function TreningNovi() {
             }
             setKorisnici(odgovor.data)
         })
+    }
+
+
+    function dodajVjezbu(vjezba) {
+        if (!odabraniVjezbe.find(p => p.sifra === vjezba.sifra)) {
+            setOdabraneVjezbe([...odabraneVjezbe, vjezba])
+        }
+        setPretragaVjezbe('')
+        setPrikaziAutocomplete(false)
+        setOdabraniIndex(-1)
+    }
+
+    function ukloniVjezbu(sifra) {
+        setOdabraneVjezbe(odabraneVjezbe.filter(p => p.sifra !== sifra))
+    }
+
+    function filtrirajVjezbe() {
+        if (!pretragaVjezbe) return []
+        return polaznici.filter(p =>
+            !odabraneVjezbe.find(op => op.sifra === p.sifra) &&
+            (p.ime.toLowerCase().includes(pretragaVjezbi.toLowerCase()) ||
+                p.prezime.toLowerCase().includes(pretragaVjezbi.toLowerCase()))
+        )
+    }
+
+    function handleKeyDown(e) {
+        const filtriraniPolaznici = filtrirajPolaznike()
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault()
+            setOdabraniIndex(prev =>
+                prev < filtriraniPolaznici.length - 1 ? prev + 1 : prev
+            )
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault()
+            setOdabraniIndex(prev => prev > 0 ? prev - 1 : 0)
+        } else if (e.key === 'Enter' && odabraniIndex >= 0 && filtriraniPolaznici.length > 0) {
+            e.preventDefault()
+            dodajPolaznika(filtriraniPolaznici[odabraniIndex])
+        } else if (e.key === 'Escape') {
+            setPrikaziAutocomplete(false)
+            setOdabraniIndex(-1)
+        }
     }
 
     async function dodaj(trening) {
