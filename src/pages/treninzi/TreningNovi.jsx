@@ -69,19 +69,19 @@ export default function TreningNovi() {
     }
 
     function handleKeyDown(e) {
-        const filtriraniPolaznici = filtrirajPolaznike()
+        const filtriraneVjezbe = filtrirajVjezbe()
 
         if (e.key === 'ArrowDown') {
             e.preventDefault()
             setOdabraniIndex(prev =>
-                prev < filtriraniPolaznici.length - 1 ? prev + 1 : prev
+                prev < filtriraneVjezbe.length - 1 ? prev + 1 : prev
             )
         } else if (e.key === 'ArrowUp') {
             e.preventDefault()
             setOdabraniIndex(prev => prev > 0 ? prev - 1 : 0)
-        } else if (e.key === 'Enter' && odabraniIndex >= 0 && filtriraniPolaznici.length > 0) {
+        } else if (e.key === 'Enter' && odabraniIndex >= 0 && filtriraneVjezbe.length > 0) {
             e.preventDefault()
-            dodajPolaznika(filtriraniPolaznici[odabraniIndex])
+            dodajVjezbu(filtriraneVjezbe[odabraniIndex])
         } else if (e.key === 'Escape') {
             setPrikaziAutocomplete(false)
             setOdabraniIndex(-1)
@@ -125,7 +125,9 @@ export default function TreningNovi() {
 
         dodaj({
             naziv: podaci.get('naziv'),
-            korisnik: odabraniKorisnik
+            korisnik: odabraniKorisnik,
+            vjezbe: odabraneVjezbe.map(p => p.sifra)
+
         })
     }
 
@@ -134,13 +136,20 @@ export default function TreningNovi() {
             <h3>Unos novog treninga</h3>
             <Form onSubmit={odradiSubmit}>
                 <Container className="mt-4">
-                    <Card className="shadow-sm">
-                        <Card.Body>
-                            <Card.Title className="mb-4">Podaci o treningu</Card.Title>
+                    
+         <Row>
+                        {/* Lijeva strana - Podaci o grupi */}
+                        <Col md={6}>
+                            <Card className="shadow-sm">
+                                <Card.Body>
+                                    <Card.Title className="mb-4">Podaci o treningu</Card.Title>
 
-                            {/* Naziv - Pun širina na svim ekranima */}
-                            <Row>
-                                <Col lg={6}>
+
+
+
+                            {/* Naziv */}
+                            
+                            
                                     <Form.Group controlId="naziv" className="mb-3">
                                         <Form.Label className="fw-bold">Naziv</Form.Label>
                                         <Form.Control
@@ -154,6 +163,7 @@ export default function TreningNovi() {
                                     <Form.Group controlId="korisnik" className="mb-3">
                                         <Form.Label className="fw-bold">Korisnik</Form.Label>
                                         <Form.Select name="korisnik" required>
+
                                             <option value="">Odaberite korisnika</option>
                                             {korisnici && korisnici.map((korisnik) => (
                                                 <option key={korisnik.sifra} value={korisnik.sifra}>
@@ -162,26 +172,114 @@ export default function TreningNovi() {
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
-                                </Col>
-                           
-                                <Col lg={6}>
-                                    vježbe
-                                </Col>
-                            </Row>
+                                
+                                </Card.Body>
+                            </Card>
+                        </Col>
 
-                            <hr />
+                        {/* Desna strana - Vjezbe */}
+                        <Col md={6}>
+                            <Card className="shadow-sm">
+                                <Card.Body>
+                                    <Card.Title className="mb-4">Vjezbe</Card.Title>
 
-                            {/* Gumbi za akciju */}
-                            <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                <Link to={RouteNames.TRENINZI} className="btn btn-danger px-4">
-                                    Odustani
-                                </Link>
-                                <Button type="submit" variant="success">
-                                    Dodaj novi trening
-                                </Button>
-                            </div>
-                        </Card.Body>
-                    </Card>
+                                    {/* Autocomplete pretraga */}
+                                    <Form.Group className="mb-3 position-relative">
+                                        <Form.Label className="fw-bold">Dodaj vjezbu</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Pretraži vježbu..."
+                                            value={pretragaVjezbe}
+                                            onChange={(e) => {
+                                                setPretragaVjezbe(e.target.value)
+                                                setPrikaziAutocomplete(e.target.value.length > 0)
+                                                setOdabraniIndex(-1)
+                                            }}
+                                            onFocus={() => setPrikaziAutocomplete(pretragaVjezbe.length > 0)}
+                                            onKeyDown={handleKeyDown}
+                                        />
+                                        {prikaziAutocomplete && filtrirajVjezbe().length > 0 && (
+                                            <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{ zIndex: 1000, maxHeight: '200px', overflowY: 'auto' }}>
+                                                {filtrirajVjezbe().map((polaznik, index) => (
+                                                    <div
+                                                        key={vjezba.sifra}
+                                                        className="p-2 cursor-pointer"
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                            backgroundColor: index === odabraniIndex ? '#007bff' : 'white',
+                                                            color: index === odabraniIndex ? 'white' : 'black'
+                                                        }}
+                                                        onClick={() => dodajVjezbu(vjezba)}
+                                                        onMouseEnter={(e) => {
+                                                            setOdabraniIndex(index)
+                                                        }}
+                                                    >
+                                                        {vjezba.ime} 
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </Form.Group>
+
+                                    {/* Tablica odabranih vježbi */}
+                                    {odabraneVjezbe.length > 0 && (
+                                        <div style={{overflow: 'auto', maxHeight: '300px'}}>
+                                            <Table striped bordered hover size="sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Ime</th>
+                                                        <th style={{ width: '80px' }}>Akcija</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {odabraneVjezbe.map(vjezba => (
+                                                        <tr key={vjezba.sifra}>
+                                                            <td>{vjezba.ime} </td>
+                                                            <td>
+                                                                <Button
+                                                                    variant="danger"
+                                                                    size="sm"
+                                                                    onClick={() => ukloniVjezbu(vjezba.sifra)}
+                                                                >
+                                                                    Obriši
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </Table>
+                                        </div>
+
+                                    )}
+                                    {odabraneVjezbe.length === 0 && (
+                                        <p className="text-muted">Nema odabranih vjezbi</p>
+                                    )}
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+
+                    <hr className="my-4" />
+
+                    {/* Gumbi za akciju */}
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <Link to={RouteNames.GRUPE} className="btn btn-danger px-4">
+                            Odustani
+                        </Link>
+                        <Button type="submit" variant="success">
+                            Dodaj novu grupu
+                        </Button>
+                    </div>
+
+
+
+
+
+
+
+
+
+
                 </Container>
             </Form>
         </>
