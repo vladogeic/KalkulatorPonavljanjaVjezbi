@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Form, Button, Row, Col, Container, Card } from "react-bootstrap"
+import { Form, Button, Row, Col, Container, Card, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { Link, useNavigate } from "react-router-dom"
 import TreningService from "../../services/treninzi/TreningService"
@@ -47,7 +47,7 @@ export default function TreningNovi() {
 
 
     function dodajVjezbu(vjezba) {
-        if (!odabraniVjezbe.find(p => p.sifra === vjezba.sifra)) {
+        if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
             setOdabraneVjezbe([...odabraneVjezbe, vjezba])
         }
         setPretragaVjezbe('')
@@ -61,10 +61,9 @@ export default function TreningNovi() {
 
     function filtrirajVjezbe() {
         if (!pretragaVjezbe) return []
-        return polaznici.filter(p =>
+        return vjezbe.filter(p =>
             !odabraneVjezbe.find(op => op.sifra === p.sifra) &&
-            (p.ime.toLowerCase().includes(pretragaVjezbi.toLowerCase()) ||
-                p.prezime.toLowerCase().includes(pretragaVjezbi.toLowerCase()))
+            (p.naziv.toLowerCase().includes(pretragaVjezbe.toLowerCase()))
         )
     }
 
@@ -200,7 +199,7 @@ export default function TreningNovi() {
                                         />
                                         {prikaziAutocomplete && filtrirajVjezbe().length > 0 && (
                                             <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{ zIndex: 1000, maxHeight: '200px', overflowY: 'auto' }}>
-                                                {filtrirajVjezbe().map((polaznik, index) => (
+                                                {filtrirajVjezbe().map((vjezba, index) => (
                                                     <div
                                                         key={vjezba.sifra}
                                                         className="p-2 cursor-pointer"
@@ -214,7 +213,7 @@ export default function TreningNovi() {
                                                             setOdabraniIndex(index)
                                                         }}
                                                     >
-                                                        {vjezba.ime} 
+                                                        {vjezba.naziv} 
                                                     </div>
                                                 ))}
                                             </div>
@@ -227,14 +226,14 @@ export default function TreningNovi() {
                                             <Table striped bordered hover size="sm">
                                                 <thead>
                                                     <tr>
-                                                        <th>Ime</th>
+                                                        <th>Vježba</th>
                                                         <th style={{ width: '80px' }}>Akcija</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {odabraneVjezbe.map(vjezba => (
                                                         <tr key={vjezba.sifra}>
-                                                            <td>{vjezba.ime} </td>
+                                                            <td>{vjezba.naziv} </td>
                                                             <td>
                                                                 <Button
                                                                     variant="danger"
@@ -263,11 +262,11 @@ export default function TreningNovi() {
 
                     {/* Gumbi za akciju */}
                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <Link to={RouteNames.GRUPE} className="btn btn-danger px-4">
+                        <Link to={RouteNames.VJEZBE} className="btn btn-danger px-4">
                             Odustani
                         </Link>
                         <Button type="submit" variant="success">
-                            Dodaj novu grupu
+                            Dodaj novu vježbu
                         </Button>
                     </div>
 
