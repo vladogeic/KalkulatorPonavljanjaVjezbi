@@ -262,7 +262,7 @@ export default function TreningNovi() {
 
                     {/* Gumbi za akciju */}
                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <Link to={RouteNames.VJEZBE} className="btn btn-danger px-4">
+                        <Link to={RouteNames.TRENINZI} className="btn btn-danger px-4">
                             Odustani
                         </Link>
                         <Button type="submit" variant="success">

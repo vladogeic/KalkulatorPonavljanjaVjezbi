@@ -24,8 +24,13 @@ export const vjezbe = [
     ,
     {
         sifra: 5,
-        naziv: 'Pregib',
+        naziv: 'Dips',
         opis: 'Opis'
+    }
+    ,
+    {   sifra: 6,
+       naziv: 'Push ups',
+       opis: 'Opis'    
     }
 ]
     

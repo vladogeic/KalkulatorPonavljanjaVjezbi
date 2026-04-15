@@ -26,7 +26,7 @@ export default function TreningPromjena(){
 
        useEffect(() => {
         if (trening.vjezbe && vjezbe.length > 0) {
-            const odabrani = vjezbe.filter(p => grupa.vjezbe.includes(p.sifra))
+            const odabrani = vjezbe.filter(p =>trening.vjezbe.includes(p.sifra))
             setOdabraneVjezbe(odabrani)
         }
     }, [trening, vjezbe])
@@ -65,7 +65,7 @@ export default function TreningPromjena(){
         if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
             setOdabraneVjezbe([...odabraneVjezbe, vjezba])
         }
-        setPretragaVjezbi('')
+        setPretragaVjezbe('')
         setPrikaziAutocomplete(false)
         setOdabraniIndex(-1)
     }
@@ -75,11 +75,11 @@ export default function TreningPromjena(){
     }
 
     function filtrirajVjezbe() {
-        if (!pretragaVjezbe) return []
+        if (!pretragaVjezbi) return []
         return vjezbe.filter(p => 
             !odabraneVjezbe.find(op => op.sifra === p.sifra) &&
-            (p.ime.toLowerCase().includes(pretragaVjezbe.toLowerCase()) ||
-             p.naziv.toLowerCase().includes(pretragaVjezbe.toLowerCase()))
+           
+             p.naziv.toLowerCase().includes(pretragaVjezbi.toLowerCase())
         )
     }
 
@@ -200,7 +200,7 @@ export default function TreningPromjena(){
                                             placeholder="Pretraži vjezbu..."
                                             value={pretragaVjezbi}
                                             onChange={(e) => {
-                                                setPretragaVjezbi(e.target.value)
+                                                setPretragaVjezbe(e.target.value)
                                                 setPrikaziAutocomplete(e.target.value.length > 0)
                                                 setOdabraniIndex(-1)
                                             }}
@@ -209,7 +209,7 @@ export default function TreningPromjena(){
                                         />
                                         {prikaziAutocomplete && filtrirajVjezbe().length > 0 && (
                                             <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{zIndex: 1000, maxHeight: '200px', overflowY: 'auto'}}>
-                                                {filtrirajVjezbe().map((vjezbaService, index) => (
+                                                {filtrirajVjezbe().map((vjezba, index) => (
                                                     <div
                                                         key={vjezba.sifra}
                                                         className="p-2 cursor-pointer"
@@ -218,12 +218,12 @@ export default function TreningPromjena(){
                                                             backgroundColor: index === odabraniIndex ? '#007bff' : 'white',
                                                             color: index === odabraniIndex ? 'white' : 'black'
                                                         }}
-                                                        onClick={() => dodajVjezbu(vjezba)}
+                                                        onClick={() => dodajVjezba(vjezba)}
                                                         onMouseEnter={(e) => {
                                                             setOdabraniIndex(index)
                                                         }}
                                                     >
-                                                        {vjezba.ime} {vjezba.naziv}
+                                                         {vjezba.naziv}
                                                     </div>
                                                 ))}
                                             </div>
@@ -241,7 +241,7 @@ export default function TreningPromjena(){
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {odabraneVjezbe.map(vjezbe => (
+                                                {odabraneVjezbe.map(vjezba => (
                                                     <tr key={vjezba.sifra}>
                                                         <td>{vjezba.ime} {vjezba.naziv}</td>
                                                         <td>
