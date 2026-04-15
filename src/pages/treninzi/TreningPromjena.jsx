@@ -43,43 +43,43 @@ export default function TreningPromjena(){
     }
 
     async function ucitajKorisnici() {
-        await KorisnikService.get().then((odgovor) => {
+        await VjezbaService.get().then((odgovor) => {
             if (!odgovor.success) {
-                alert('Nije implementiran servis za korisnike')
+                alert('Nije implementiran servis za vjezbe')
                 return
             }
-            setKorisnici(odgovor.data)
+            setVjezbe(odgovor.data)
         })
     }
-        async function ucitajPolaznike() {
-        await PolaznikService.get().then((odgovor) => {
+        async function ucitajVjezbe() {
+        await VjezbaService.get().then((odgovor) => {
             if (!odgovor.success) {
-                alert('Nije implementiran servis za polaznike')
+                alert('Nije implementiran servis za vjezbe')
                 return
             }
-            setPolaznici(odgovor.data)
+            setVjezbe(odgovor.data)
         })
     }
 
-    function dodajPolaznika(polaznik) {
-        if (!odabraniPolaznici.find(p => p.sifra === polaznik.sifra)) {
-            setOdabraniPolaznici([...odabraniPolaznici, polaznik])
+    function dodajVjezba(vjezba) {
+        if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
+            setOdabraneVjezbe([...odabraneVjezbe, vjezba])
         }
-        setPretragaPolaznika('')
+        setPretragaVjezbi('')
         setPrikaziAutocomplete(false)
         setOdabraniIndex(-1)
     }
 
-    function ukloniPolaznika(sifra) {
-        setOdabraniPolaznici(odabraniPolaznici.filter(p => p.sifra !== sifra))
+    function ukloniVjezbu(sifra) {
+        setOdabraneVjezbe(odabraneVjezbe.filter(p => p.sifra !== sifra))
     }
 
-    function filtrirajPolaznike() {
-        if (!pretragaPolaznika) return []
-        return polaznici.filter(p => 
-            !odabraniPolaznici.find(op => op.sifra === p.sifra) &&
-            (p.ime.toLowerCase().includes(pretragaPolaznika.toLowerCase()) ||
-             p.prezime.toLowerCase().includes(pretragaPolaznika.toLowerCase()))
+    function filtrirajVjezbe() {
+        if (!pretragaVjezbe) return []
+        return vjezbe.filter(p => 
+            !odabraneVjezbe.find(op => op.sifra === p.sifra) &&
+            (p.ime.toLowerCase().includes(pretragaVjezbe.toLowerCase()) ||
+             p.naziv.toLowerCase().includes(pretragaVjezbe.toLowerCase()))
         )
     }
 
@@ -102,9 +102,6 @@ export default function TreningPromjena(){
             setOdabraniIndex(-1)
         }
     }
-
-
-
 
     async function promjeni(trening) {
         await TreningService.promjeni(params.sifra,trening).then(()=>{
@@ -147,13 +144,11 @@ export default function TreningPromjena(){
             vjezbe: odabraneVjezbe.map(p => p.sifra)
         })
     }
-
     return(
          <>
             <h3>Promjena treninga</h3>
             <Form onSubmit={odradiSubmit}>
-                <Container className="mt-4">
-                    
+                <Container className="mt-4">                    
                      <Row>
                         {/* Lijeva strana - Podaci o treningu */}
                         <Col md={6}>
@@ -161,9 +156,7 @@ export default function TreningPromjena(){
                                 <Card.Body>
                                     <Card.Title className="mb-4">Podaci o treningu</Card.Title>
 
-
-                            {/* Naziv */}
-                            
+                            {/* Naziv */}                            
                             
                                     <Form.Group controlId="naziv" className="mb-3">
                                         <Form.Label className="fw-bold">Naziv</Form.Label>
@@ -174,12 +167,9 @@ export default function TreningPromjena(){
                                             required
                                             defaultValue={trening.naziv}
                                         />
-                                    </Form.Group>
-                                
-                            
+                                    </Form.Group>                                                         
 
-                            {/* Korisnik  */}
-                            
+                            {/* Korisnik  */}                            
                             
                                     <Form.Group controlId="korisnik" className="mb-3">
                                         <Form.Label className="fw-bold">Korisnik</Form.Label>
@@ -193,8 +183,7 @@ export default function TreningPromjena(){
                                         </Form.Select>
                                     </Form.Group>
 
-                            </Card.Body>
-                            </Card>
+                            </Card.Body>                            </Card>
                             </Col>
 
                         {/* Desna strana - Vjezbe */}
@@ -209,57 +198,57 @@ export default function TreningPromjena(){
                                         <Form.Control
                                             type="text"
                                             placeholder="Pretraži vjezbu..."
-                                            value={pretragaPolaznika}
+                                            value={pretragaVjezbi}
                                             onChange={(e) => {
-                                                setPretragaPolaznika(e.target.value)
+                                                setPretragaVjezbi(e.target.value)
                                                 setPrikaziAutocomplete(e.target.value.length > 0)
                                                 setOdabraniIndex(-1)
                                             }}
-                                            onFocus={() => setPrikaziAutocomplete(pretragaPolaznika.length > 0)}
+                                            onFocus={() => setPrikaziAutocomplete(pretragaVjezbi.length > 0)}
                                             onKeyDown={handleKeyDown}
                                         />
-                                        {prikaziAutocomplete && filtrirajPolaznike().length > 0 && (
+                                        {prikaziAutocomplete && filtrirajVjezbe().length > 0 && (
                                             <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{zIndex: 1000, maxHeight: '200px', overflowY: 'auto'}}>
-                                                {filtrirajPolaznike().map((polaznik, index) => (
+                                                {filtrirajVjezbe().map((vjezbaService, index) => (
                                                     <div
-                                                        key={polaznik.sifra}
+                                                        key={vjezba.sifra}
                                                         className="p-2 cursor-pointer"
                                                         style={{
                                                             cursor: 'pointer',
                                                             backgroundColor: index === odabraniIndex ? '#007bff' : 'white',
                                                             color: index === odabraniIndex ? 'white' : 'black'
                                                         }}
-                                                        onClick={() => dodajPolaznika(polaznik)}
+                                                        onClick={() => dodajVjezbu(vjezba)}
                                                         onMouseEnter={(e) => {
                                                             setOdabraniIndex(index)
                                                         }}
                                                     >
-                                                        {polaznik.ime} {polaznik.prezime}
+                                                        {vjezba.ime} {vjezba.naziv}
                                                     </div>
                                                 ))}
                                             </div>
                                         )}
                                     </Form.Group>
 
-                                    {/* Tablica odabranih polaznika */}
-                                    {odabraniPolaznici.length > 0 && (
+                                    {/* Tablica odabranih vjezbi */}
+                                    {odabraneVjezbe.length > 0 && (
                                         <div style={{overflow: 'auto', maxHeight: '300px'}}>
                                         <Table striped bordered hover size="sm">
                                             <thead>
                                                 <tr>
-                                                    <th>Ime i prezime</th>
+                                                    <th>Ime</th>
                                                     <th style={{width: '80px'}}>Akcija</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {odabraniPolaznici.map(polaznik => (
-                                                    <tr key={polaznik.sifra}>
-                                                        <td>{polaznik.ime} {polaznik.prezime}</td>
+                                                {odabraneVjezbe.map(vjezbe => (
+                                                    <tr key={vjezba.sifra}>
+                                                        <td>{vjezba.ime} {vjezba.naziv}</td>
                                                         <td>
                                                             <Button
                                                                 variant="danger"
                                                                 size="sm"
-                                                                onClick={() => ukloniPolaznika(polaznik.sifra)}
+                                                                onClick={() => ukloniVjezbu(vjezba.sifra)}
                                                             >
                                                                 Obriši
                                                             </Button>
@@ -270,8 +259,8 @@ export default function TreningPromjena(){
                                         </Table>
                                         </div>
                                     )}
-                                    {odabraniPolaznici.length === 0 && (
-                                        <p className="text-muted">Nema odabranih polaznika</p>
+                                    {odabraneVjezbe.length === 0 && (
+                                        <p className="text-muted">Nema odabranih vjezbi</p>
                                     )}
                                 </Card.Body>
                             </Card>
@@ -282,11 +271,11 @@ export default function TreningPromjena(){
 
                     {/* Gumbi za akciju */}
                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <Link to={RouteNames.GRUPE} className="btn btn-danger px-4">
+                        <Link to={RouteNames.TRENINZI} className="btn btn-danger px-4">
                             Odustani
                         </Link>
                         <Button type="submit" variant="success">
-                            Promjeni grupu
+                            Promjeni trening
                         </Button>
                     </div>
 
