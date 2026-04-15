@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import TreningService from "../../services/treninzi/TreningService"
 import KorisnikService from "../../services/korisnici/KorisnikService"
 import { Button, Table } from "react-bootstrap"
+import VjezbaService from "../../services/vjezbe/VjezbaService"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
 
@@ -50,6 +51,40 @@ export default function TreningPregled(){
         const korisnik = korisnici.find(s => s.sifra === sifraKorisnik)
         return korisnik ? korisnik.ime : 'Nepoznat korisnik'
     }
+
+
+        async function generirajPDFZaVjezbu(vjezba) {
+        // Dohvati smjer
+        const smjer = smjerovi.find(s => s.sifra === vjezba.smjer)
+        if (!smjer) {
+            alert('Smjer nije pronađen')
+            return
+        }
+
+        // Dohvati sve vjezbe
+        const odgovorVjezbe = await VjezbaService.get()
+        if (!odgovorVjezbe.success) {
+            alert('Nije moguće dohvatiti vježbe')
+            return
+        }
+
+        // Filtriraj vjezbe koji pripadaju ovom treningu
+        const VjezbeTreninge = odgovorPolaznici.data.filter(p => 
+            trening.vjezbe && trening.vjezbe.includes(p.sifra)
+        )
+
+        // Generiraj PDF
+        const generiraj = GrupaPDFGenerator({ 
+            trening, 
+            smjer, 
+            vjezbe: vjezbeTreninzi 
+        })
+        await generiraj()
+    }
+
+
+
+
 
     return(
         <>
