@@ -35,6 +35,13 @@ return(
                             onClick={()=>navigate(RouteNames.TRENINZI)}
                             >Treninzi</NavDropdown.Item>
 
+                            
+                        <NavDropdown.Divider />
+                        
+                        <NavDropdown.Item
+                            onClick={()=>navigate(RouteNames.GENERIRANJE_PODATAKA)}
+                            >Generiraj podatke</NavDropdown.Item>
+
 
 
 

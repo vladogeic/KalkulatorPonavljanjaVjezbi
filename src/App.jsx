@@ -16,6 +16,7 @@ import KorisnikPromjena from './pages/korisnici/KorisnikPromjena'
 import TreningPregled from './pages/treninzi/TreningPregled'
 import TreningNovi from './pages/treninzi/TreningNovi'
 import TreningPromjena from './pages/treninzi/TreningPromjena'
+import GeneriranjePodataka from './pages/GeneriranjePodataka'
 
 
 
@@ -37,6 +38,7 @@ function App() {
         <Route  path= {RouteNames.KORISNICI} element ={<KorisnikPregled />}/>
         <Route  path= {RouteNames.KORISNICI_NOVI} element ={<KorisnikNovi/>}/>
         <Route  path= {RouteNames.KORISNICI_PROMJENA} element ={<KorisnikPromjena/>}/>
+        <Route path={RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
 
 
         <Route path={RouteNames.TRENINZI} element={<TreningPregled />} />
