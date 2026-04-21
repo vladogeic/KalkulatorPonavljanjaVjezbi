@@ -2,13 +2,13 @@
 import { useState } from 'react';
 import { Button, Form, Alert, Container, Row, Col } from 'react-bootstrap';
 import { Faker, hr } from '@faker-js/faker';
-import SmjerService from '../services/smjerovi/SmjerService';
+import KorisnikService from '../services/korisnici/KorisnikService';
 import VjezbaService from '../services/vjezbe/VjezbaService';
 import TreningService from '../services/treninzi/TreningService';
 
 
 export default function GeneriranjePodataka() {
-    const [brojSmjerova, setBrojSmjerova] = useState(5);
+    const [brojKorisnika, setBrojKorisnika] = useState(5);
     const [brojVjezbi, setBrojVjezbe] = useState(20);
     const [brojTreninga, setBrojTreninga] = useState(10);
     const [poruka, setPoruka] = useState(null);
