@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { Button, Form, Alert, Container, Row, Col } from 'react-bootstrap';
 import { Faker, hr } from '@faker-js/faker';
 import SmjerService from '../services/smjerovi/SmjerService';
-import PolaznikService from '../services/polaznici/PolaznikService';
-import GrupaService from '../services/grupe/GrupaService';
+import VjezbaService from '../services/vjezbe/VjezbaService';
+import TreningService from '../services/treninzi/TreningService';
 
 
 export default function GeneriranjePodataka() {
     const [brojSmjerova, setBrojSmjerova] = useState(5);
-    const [brojPolaznika, setBrojPolaznika] = useState(20);
-    const [brojGrupa, setBrojGrupa] = useState(10);
+    const [brojVjezbi, setBrojVjezbe] = useState(20);
+    const [brojTreninga, setBrojTreninga] = useState(10);
     const [poruka, setPoruka] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -49,7 +49,7 @@ export default function GeneriranjePodataka() {
         }
     };
 
-    const generirajPolaznike = async (broj) => {
+    const generirajVjezbe = async (broj) => {
         for (let i = 0; i < broj; i++) {
             const polaznik = {
                 ime: i%2===0? faker.person.firstName('male') : faker.person.firstName('female'),
@@ -57,7 +57,7 @@ export default function GeneriranjePodataka() {
                 email: faker.internet.email(),
                 oib: faker.string.numeric(11)
             };
-            await PolaznikService.dodaj(polaznik);
+            await VjezbaService.dodaj(vjezba);
         }
     };
 
@@ -81,7 +81,7 @@ export default function GeneriranjePodataka() {
                 smjer: randomSmjer.sifra
             };
             
-            await GrupaService.dodaj(grupa);
+            await VjezbaService.dodaj(grupa);
         }
     };
 
@@ -114,16 +114,16 @@ export default function GeneriranjePodataka() {
 
         try {
             
-            await generirajPolaznike(brojPolaznika);
+            await generirajVjezbi(brojVjezbi);
 
             setPoruka({
                 tip: 'success',
-                tekst: `Uspješno generirano ${brojPolaznika} polaznika!`
+                tekst: `Uspješno generirano ${brojVjezbi} vježbi!`
             });
         } catch (error) {
             setPoruka({
                 tip: 'danger',
-                tekst: 'Greška pri generiranju polaznika: ' + error.message
+                tekst: 'Greška pri generiranju vježbi: ' + error.message
             });
         } finally {
             setLoading(false);
@@ -131,7 +131,7 @@ export default function GeneriranjePodataka() {
     };
 
     const handleObrisiPolaznike = async () => {
-        if (!window.confirm('Jeste li sigurni da želite obrisati sve polaznike?')) {
+        if (!window.confirm('Jeste li sigurni da želite obrisati sve vježbe?')) {
             return;
         }
 
@@ -139,21 +139,21 @@ export default function GeneriranjePodataka() {
         setPoruka(null);
 
         try {
-            const rezultat = await PolaznikService.get();
-            const polaznici = rezultat.data;
+            const rezultat = await VjezbaService.get();
+            const vjezbe = rezultat.data;
             
-            for (const polaznik of polaznici) {
-                await PolaznikService.obrisi(polaznik.sifra);
+            for (const vjezba of vjezba) {
+                await VjezbaService.obrisi(polaznik.sifra);
             }
 
             setPoruka({
                 tip: 'success',
-                tekst: `Uspješno obrisano ${polaznici.length} polaznika!`
+                tekst: `Uspješno obrisano ${polaznici.length} vjezbi!`
             });
         } catch (error) {
             setPoruka({
                 tip: 'danger',
-                tekst: 'Greška pri brisanju polaznika: ' + error.message
+                tekst: 'Greška pri brisanju vježbi: ' + error.message
             });
         } finally {
             setLoading(false);
@@ -190,22 +190,22 @@ export default function GeneriranjePodataka() {
         }
     };
 
-    const handleGenerirajGrupe = async (e) => {
+    const handleGenerirajVjezbe = async (e) => {
         e.preventDefault();
         setLoading(true);
         setPoruka(null);
 
         try {
-            await generirajGrupe(brojGrupa);
+            await generirajVjezba(brojVjezbi);
 
             setPoruka({
                 tip: 'success',
-                tekst: `Uspješno generirano ${brojGrupa} grupa!`
+                tekst: `Uspješno generirano ${brojVjezbi} vjezbi!`
             });
         } catch (error) {
             setPoruka({
                 tip: 'danger',
-                tekst: 'Greška pri generiranju grupa: ' + error.message
+                tekst: 'Greška pri generiranju vježbi: ' + error.message
             });
         } finally {
             setLoading(false);
@@ -213,7 +213,7 @@ export default function GeneriranjePodataka() {
     };
 
     const handleObrisiGrupe = async () => {
-        if (!window.confirm('Jeste li sigurni da želite obrisati sve grupe?')) {
+        if (!window.confirm('Jeste li sigurni da želite obrisati sve vježbe?')) {
             return;
         }
 
@@ -221,21 +221,21 @@ export default function GeneriranjePodataka() {
         setPoruka(null);
 
         try {
-            const rezultat = await GrupaService.get();
-            const grupe = rezultat.data;
+            const rezultat = await VjezbaService.get();
+            const vjezbe = rezultat.data;
             
-            for (const grupa of grupe) {
-                await GrupaService.obrisi(grupa.sifra);
+            for (const grupa of vjezbe) {
+                await VjezbaService.obrisi(vjezbe.sifra);
             }
 
             setPoruka({
                 tip: 'success',
-                tekst: `Uspješno obrisano ${grupe.length} grupa!`
+                tekst: `Uspješno obrisano ${vjezbe.length} vježbi!`
             });
         } catch (error) {
             setPoruka({
                 tip: 'danger',
-                tekst: 'Greška pri brisanju grupa: ' + error.message
+                tekst: 'Greška pri brisanju vježbi: ' + error.message
             });
         } finally {
             setLoading(false);
@@ -283,15 +283,15 @@ export default function GeneriranjePodataka() {
                     </Form>
                 </Col>
                 <Col md={4}>
-                    <Form onSubmit={handleGenerirajPolaznike}>
+                    <Form onSubmit={handleGenerirajVjezbe}>
                         <Form.Group className="mb-3">
-                            <Form.Label>Broj polaznika</Form.Label>
+                            <Form.Label>Broj vjezbi</Form.Label>
                             <Form.Control
                                 type="number"
                                 min="1"
                                 max="200"
                                 value={brojPolaznika}
-                                onChange={(e) => setBrojPolaznika(parseInt(e.target.value))}
+                                onChange={(e) => setBrojVjezbe(parseInt(e.target.value))}
                                 disabled={loading}
                             />
                             <Form.Text className="text-muted">
@@ -304,20 +304,20 @@ export default function GeneriranjePodataka() {
                             disabled={loading}
                             className="w-100"
                         >
-                            {loading ? 'Generiranje...' : 'Generiraj polaznike'}
+                            {loading ? 'Generiranje...' : 'Generiraj vjezbe'}
                         </Button>
                     </Form>
                 </Col>
                 <Col md={4}>
-                    <Form onSubmit={handleGenerirajGrupe}>
+                    <Form onSubmit={handleGenerirajTreninge}>
                         <Form.Group className="mb-3">
-                            <Form.Label>Broj grupa</Form.Label>
+                            <Form.Label>Broj treninga</Form.Label>
                             <Form.Control
                                 type="number"
                                 min="1"
                                 max="100"
-                                value={brojGrupa}
-                                onChange={(e) => setBrojGrupa(parseInt(e.target.value))}
+                                value={brojTreninga}
+                                onChange={(e) => setBrojTreninga(parseInt(e.target.value))}
                                 disabled={loading}
                             />
                             <Form.Text className="text-muted">
@@ -330,7 +330,7 @@ export default function GeneriranjePodataka() {
                             disabled={loading}
                             className="w-100"
                         >
-                            {loading ? 'Generiranje...' : 'Generiraj grupe'}
+                            {loading ? 'Generiranje...' : 'Generiraj treninge'}
                         </Button>
                     </Form>
                 </Col>
@@ -366,17 +366,17 @@ export default function GeneriranjePodataka() {
                         disabled={loading}
                         className="w-100 mb-2"
                     >
-                        {loading ? 'Brisanje...' : 'Obriši sve polaznike'}
+                        {loading ? 'Brisanje...' : 'Obriši sve vjezbe'}
                     </Button>
                 </Col>
                 <Col md={4}>
                     <Button 
                         variant="danger" 
-                        onClick={handleObrisiGrupe}
+                        onClick={handleObrisiTreninge}
                         disabled={loading}
                         className="w-100 mb-2"
                     >
-                        {loading ? 'Brisanje...' : 'Obriši sve grupe'}
+                        {loading ? 'Brisanje...' : 'Obriši sve treninge'}
                     </Button>
                 </Col>
             </Row>

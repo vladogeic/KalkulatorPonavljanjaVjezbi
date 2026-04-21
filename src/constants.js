@@ -13,7 +13,7 @@ export const RouteNames={
    
     TRENINZI: '/treninzi',
     TRENINZI_NOVI: '/treninzi/novi',
-    TRENINZI_PROMJENA: '/treninzi/:sifra'
+    TRENINZI_PROMJENA: '/treninzi/:sifra',
     GENERIRANJE_PODATAKA: '/generiraj-podatke'
 
 
