@@ -38,7 +38,7 @@ function App() {
         <Route  path= {RouteNames.KORISNICI} element ={<KorisnikPregled />}/>
         <Route  path= {RouteNames.KORISNICI_NOVI} element ={<KorisnikNovi/>}/>
         <Route  path= {RouteNames.KORISNICI_PROMJENA} element ={<KorisnikPromjena/>}/>
-        <Route path={RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
+        <Route  path= {RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
 
 
         <Route path={RouteNames.TRENINZI} element={<TreningPregled />} />
