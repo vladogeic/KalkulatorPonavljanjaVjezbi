@@ -53,7 +53,7 @@ export default function GeneriranjePodataka() {
         for (let i = 0; i < broj; i++) {
             const polaznik = {
                 ime: i%2===0? faker.person.firstName('male') : faker.person.firstName('female'),
-                prezime: faker.person.lastName(),
+                
                 email: faker.internet.email(),
                 oib: faker.string.numeric(11)
             };
@@ -143,12 +143,12 @@ export default function GeneriranjePodataka() {
             const vjezbe = rezultat.data;
             
             for (const vjezba of vjezba) {
-                await VjezbaService.obrisi(polaznik.sifra);
+                await VjezbaService.obrisi(vjezba.sifra);
             }
 
             setPoruka({
                 tip: 'success',
-                tekst: `Uspješno obrisano ${polaznici.length} vjezbi!`
+                tekst: `Uspješno obrisano ${vjezbe.length} vjezbi!`
             });
         } catch (error) {
             setPoruka({
@@ -295,7 +295,7 @@ export default function GeneriranjePodataka() {
                                 disabled={loading}
                             />
                             <Form.Text className="text-muted">
-                                Unesite broj polaznika (1-200)
+                                Unesite broj vjezbi (1-200)
                             </Form.Text>
                         </Form.Group>
                         <Button 
