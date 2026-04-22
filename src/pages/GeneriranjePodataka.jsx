@@ -8,8 +8,8 @@ import TreningService from '../services/treninzi/TreningService';
 
 
 export default function GeneriranjePodataka() {
-    const [brojKorisnika, setBrojKorisnika] = useState(5);
     const [brojVjezbi, setBrojVjezbe] = useState(20);
+    const [brojKorisnika, setBrojKorisnika] = useState(5);
     const [brojTreninga, setBrojTreninga] = useState(10);
     const [poruka, setPoruka] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -19,49 +19,41 @@ export default function GeneriranjePodataka() {
         locale: [hr]
     });
 
-    const generirajKorisnike = async (broj) => {
-        const naziviKorisnika = [
-            'Web programiranje',
-            'Java programiranje',
-            'Python programiranje',
-            'Frontend razvoj',
-            'Backend razvoj',
-            'Full Stack razvoj',
-            'Mobile razvoj',
-            'DevOps',
-            'Data Science',
-            'Cyber Security',
-            'UI/UX dizajn',
-            'Digital Marketing',
-            'Grafički dizajn',
-            'Video produkcija',
-            'Fotografija'
-        ];
-
-        for (let i = 0; i < broj; i++) {
-            await KorisnikService.dodaj({
-                naziv: naziviKorisnika[i % naziviKorisnika.length] + (i >= naziviKorisnika.length ? ` ${Math.floor(i / naziviKorisnika.length) + 1}` : ''),
-                trajanje: faker.number.int({ min: 130, max: 350 }),
-                cijena: faker.number.float({ min: 1100, max: 5000, precision: 0.01 }).toFixed(2),
-                datumPokretanja: faker.date.soon().toISOString().split('T')[0],
-                aktivan: faker.datatype.boolean()
-            });
-        }
-    };
+    
 
     const generirajVjezbe = async (broj) => {
         for (let i = 0; i < broj; i++) {
-            const polaznik = {
-                ime: i%2===0? faker.person.firstName('male') : faker.person.firstName('female'),
-                
-                email: faker.internet.email(),
-                oib: faker.string.numeric(11)
+            const vjezba = {
+                naziv: i%2===0? faker.person.firstName('male') : faker.person.firstName('female'),
+                opis: '',
             };
             await VjezbaService.dodaj(vjezba);
         }
     };
 
-    const generirajGrupe = async (broj) => {
+    const generirajKorisnike = async (broj) => {
+        const naziviKorisnika = [
+            'Ana',
+            'Marija',
+            'Marko',
+            'Zvonko',
+            'Khan',
+            'Vladimir',
+            'Tomislav'
+        ];
+
+        for (let i = 0; i < broj; i++) {
+            await KorisnikService.dodaj({
+                ime: naziviKorisnika[i % naziviKorisnika.length] + (i >= naziviKorisnika.length ? ` ${Math.floor(i / naziviKorisnika.length) + 1}` : ''),
+                spol: i % 2 === 0 ? 'M' : 'Ž',
+                tezina: faker.number.int({ min: 45, max: 150})
+            });
+        }
+    };
+
+     
+
+    const generirajTreninge = async (broj) => {
 
         // Dohvati sve korisnike
         const rezultatKorisnici = await KorisnikService.get();
@@ -76,12 +68,36 @@ export default function GeneriranjePodataka() {
             // Odaberi nasumičnog korisnika
             const randomKorisnik = korisnici[faker.number.int({ min: 0, max: korisnici.length - 1 })];
   
-            const grupa = {
-                naziv: randomKorisnik.naziv.trim().split(/\s+/).slice(0, 2).map(rijec => rijec[0]).join('').toUpperCase(),   
-                smjer: randomKorisnik.sifra
+            const trening = {
+                naziv: 'Trening ' + i,   
+                korisnik: randomKorisnik.sifra,
+                vjezbe: [1,2]
             };
             
-            await VjezbaService.dodaj(grupa);
+            await TreningService.dodaj(trening);
+        }
+    };
+
+
+     const handleGenerirajVjezbe = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setPoruka(null);
+
+        try {
+            await generirajVjezbe(brojVjezbi);
+
+            setPoruka({
+                tip: 'success',
+                tekst: `Uspješno generirano ${brojVjezbi} vjezbi!`
+            });
+        } catch (error) {
+            setPoruka({
+                tip: 'danger',
+                tekst: 'Greška pri generiranju vježbi: ' + error.message
+            });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -107,30 +123,32 @@ export default function GeneriranjePodataka() {
         }
     };
 
-    const handleGenerirajPolaznike = async (e) => {
+   
+
+    const handleGenerirajTreninge = async (e) => {
         e.preventDefault();
         setLoading(true);
         setPoruka(null);
 
         try {
             
-            await generirajVjezbi(brojVjezbi);
+            await generirajTreninge(brojTreninga);
 
             setPoruka({
                 tip: 'success',
-                tekst: `Uspješno generirano ${brojVjezbi} vježbi!`
+                tekst: `Uspješno generirano ${brojTreninga} treninga!`
             });
         } catch (error) {
             setPoruka({
                 tip: 'danger',
-                tekst: 'Greška pri generiranju vježbi: ' + error.message
+                tekst: 'Greška pri generiranju treninga: ' + error.message
             });
         } finally {
             setLoading(false);
         }
     };
 
-    const handleObrisiPolaznike = async () => {
+    const handleObrisiVjezbe = async () => {
         if (!window.confirm('Jeste li sigurni da želite obrisati sve vježbe?')) {
             return;
         }
@@ -142,7 +160,7 @@ export default function GeneriranjePodataka() {
             const rezultat = await VjezbaService.get();
             const vjezbe = rezultat.data;
             
-            for (const vjezba of vjezba) {
+            for (const vjezba of vjezbe) {
                 await VjezbaService.obrisi(vjezba.sifra);
             }
 
@@ -190,30 +208,10 @@ export default function GeneriranjePodataka() {
         }
     };
 
-    const handleGenerirajVjezbe = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setPoruka(null);
+   
 
-        try {
-            await generirajVjezba(brojVjezbi);
-
-            setPoruka({
-                tip: 'success',
-                tekst: `Uspješno generirano ${brojVjezbi} vjezbi!`
-            });
-        } catch (error) {
-            setPoruka({
-                tip: 'danger',
-                tekst: 'Greška pri generiranju vježbi: ' + error.message
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleObrisiGrupe = async () => {
-        if (!window.confirm('Jeste li sigurni da želite obrisati sve vježbe?')) {
+    const handleObrisiTreninge = async () => {
+        if (!window.confirm('Jeste li sigurni da želite obrisati sve treninge?')) {
             return;
         }
 
@@ -221,21 +219,21 @@ export default function GeneriranjePodataka() {
         setPoruka(null);
 
         try {
-            const rezultat = await VjezbaService.get();
-            const vjezbe = rezultat.data;
+            const rezultat = await TreningService.get();
+            const treninzi = rezultat.data;
             
-            for (const grupa of vjezbe) {
-                await VjezbaService.obrisi(vjezbe.sifra);
+            for (const t of treninzi) {
+                await TreningService.obrisi(t.sifra);
             }
 
             setPoruka({
                 tip: 'success',
-                tekst: `Uspješno obrisano ${vjezbe.length} vježbi!`
+                tekst: `Uspješno obrisano ${treninzi.length} treninga!`
             });
         } catch (error) {
             setPoruka({
                 tip: 'danger',
-                tekst: 'Greška pri brisanju vježbi: ' + error.message
+                tekst: 'Greška pri brisanju treninga: ' + error.message
             });
         } finally {
             setLoading(false);
@@ -256,32 +254,7 @@ export default function GeneriranjePodataka() {
             )}
 
             <Row>
-                <Col md={4}>
-                    <Form onSubmit={handleGenerirajKorisnike}>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Broj korisnika</Form.Label>
-                            <Form.Control
-                                type="number"
-                                min="1"
-                                max="50"
-                                value={brojKorisnika}
-                                onChange={(e) => setBrojKorisnika(parseInt(e.target.value))}
-                                disabled={loading}
-                            />
-                            <Form.Text className="text-muted">
-                                Unesite broj korisnika (1-50)
-                            </Form.Text>
-                        </Form.Group>
-                        <Button 
-                            variant="primary" 
-                            type="submit" 
-                            disabled={loading}
-                            className="w-100"
-                        >
-                            {loading ? 'Generiranje...' : 'Generiraj korisnike'}
-                        </Button>
-                    </Form>
-                </Col>
+                
                 <Col md={4}>
                     <Form onSubmit={handleGenerirajVjezbe}>
                         <Form.Group className="mb-3">
@@ -310,6 +283,32 @@ export default function GeneriranjePodataka() {
                 </Col>
                 <Col md={4}>
                     <Form onSubmit={handleGenerirajKorisnike}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Broj korisnika</Form.Label>
+                            <Form.Control
+                                type="number"
+                                min="1"
+                                max="50"
+                                value={brojKorisnika}
+                                onChange={(e) => setBrojKorisnika(parseInt(e.target.value))}
+                                disabled={loading}
+                            />
+                            <Form.Text className="text-muted">
+                                Unesite broj korisnika (1-50)
+                            </Form.Text>
+                        </Form.Group>
+                        <Button 
+                            variant="primary" 
+                            type="submit" 
+                            disabled={loading}
+                            className="w-100"
+                        >
+                            {loading ? 'Generiranje...' : 'Generiraj korisnike'}
+                        </Button>
+                    </Form>
+                </Col>
+                <Col md={4}>
+                    <Form onSubmit={handleGenerirajTreninge}>
                         <Form.Group className="mb-3">
                             <Form.Label>Broj treninga</Form.Label>
                             <Form.Control
@@ -349,16 +348,7 @@ export default function GeneriranjePodataka() {
             </p>
 
             <Row className="mt-3">
-                <Col md={4}>
-                    <Button 
-                        variant="danger" 
-                        onClick={handleObrisiKorisnike}
-                        disabled={loading}
-                        className="w-100 mb-2"
-                    >
-                        {loading ? 'Brisanje...' : 'Obriši sve korisnike'}
-                    </Button>
-                </Col>
+                
                 <Col md={4}>
                     <Button 
                         variant="danger" 
@@ -367,6 +357,16 @@ export default function GeneriranjePodataka() {
                         className="w-100 mb-2"
                     >
                         {loading ? 'Brisanje...' : 'Obriši sve vjezbe'}
+                    </Button>
+                </Col>
+                <Col md={4}>
+                    <Button 
+                        variant="danger" 
+                        onClick={handleObrisiKorisnike}
+                        disabled={loading}
+                        className="w-100 mb-2"
+                    >
+                        {loading ? 'Brisanje...' : 'Obriši sve korisnike'}
                     </Button>
                 </Col>
                 <Col md={4}>

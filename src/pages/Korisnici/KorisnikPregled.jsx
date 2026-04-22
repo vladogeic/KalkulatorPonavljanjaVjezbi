@@ -44,7 +44,6 @@ export default function KorisnikPregled(){
                     <th>Spol</th>
                     <th>Ime</th>
                     <th>Težina</th>
-                    <th>OIB</th>
                     <th>Akcija</th>
                 </tr>
             </thead>
@@ -54,7 +53,6 @@ export default function KorisnikPregled(){
                         <td className="lead">{korisnik.spol}</td>
                         <td className="lead">{korisnik.ime}</td>
                         <td>{korisnik.tezina}</td>
-                        <td>{korisnik.oib}</td>
                         <td>
                             <Button onClick={()=>{navigate(`/korisnici/${korisnik.sifra}`)}}>
                                 Promjeni

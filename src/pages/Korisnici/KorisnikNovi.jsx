@@ -54,29 +54,14 @@ export default function KorisnikNovi(){
         //     return;
         // }
 
-        // --- KONTROLA 7: OIB (Postojanje) ---
-        if (!podaci.get('oib') || podaci.get('oib').trim().length === 0) {
-            alert("OIB je obavezan!");
-            return;
-        }
+  
+   
 
-        // --- KONTROLA 8: OIB (Duljina) ---
-        if (podaci.get('oib').trim().length !== 11) {
-            alert("OIB mora imati točno 11 znamenki!");
-            return;
-        }
-
-        // --- KONTROLA 9: OIB (Samo brojevi) ---
-        if (!/^\d+$/.test(podaci.get('oib'))) {
-            alert("OIB smije sadržavati samo brojeve!");
-            return;
-        }
 
         dodaj({
             ime: podaci.get('ime'),
             spol: podaci.get('spol'),
-            tezina: parseInt(podaci.get('tezina')),
-            oib: podaci.get('oib')
+            tezina: parseInt(podaci.get('tezina'))
         })
     }
 
@@ -97,11 +82,6 @@ export default function KorisnikNovi(){
                 <Form.Group controlId="tezina">
                     <Form.Label>Težina</Form.Label>
                     <Form.Control type="number" name="tezina" required />
-                </Form.Group>
-
-                <Form.Group controlId="oib">
-                    <Form.Label>OIB</Form.Label>
-                    <Form.Control type="text" name="oib" required maxLength={11} />
                 </Form.Group>
 
                 <Row className="mt-4">
