@@ -48,7 +48,7 @@ async function promjeni(sifra, trening) {
     const index = treninzi.findIndex(g => g.sifra === parseInt(sifra));
     
     if (index !== -1) {
-        grupe[index] = { ...treninzi[index], ...trening, sifra: parseInt(sifra) };
+        treninzi[index] = { ...treninzi[index], ...trening, sifra: parseInt(sifra) };
         spremiUStorage(treninzi);
     }
     return { data: treninzi[index] };
@@ -57,7 +57,7 @@ async function promjeni(sifra, trening) {
 // 4/4 Delete - obriši
 async function obrisi(sifra) {
     let treninzi = dohvatiSveIzStorage();
-    treninzi = grupe.filter(g => g.sifra !== parseInt(sifra));
+    treninzi = treninzi.filter(g => g.sifra !== parseInt(sifra));
     spremiUStorage(treninzi);
     return { message: 'Obrisano' };
 }

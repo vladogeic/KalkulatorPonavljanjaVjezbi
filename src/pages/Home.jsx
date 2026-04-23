@@ -47,7 +47,7 @@ export default function Home() {
             try {
                 const korisnici = await KorisnikService.get();
 
-                setBrojKorisnik(korisnici.data.length);
+                setBrojKorisnika(korisnici.data.length);
             } catch (error) {
                 console.error('Greška pri dohvaćanju podataka:', error);
             }
@@ -60,7 +60,7 @@ export default function Home() {
     useEffect(() => {
         if (animatedKorisnika < brojKorisnika) {
             const timer = setTimeout(() => {
-                setAnimatedTreninga(prev => Math.min(prev + 1, brojKorisnika));
+                setAnimatedKorisnika(prev => Math.min(prev + 1, brojKorisnika));
             }, 200);
             return () => clearTimeout(timer);
         }
