@@ -100,19 +100,13 @@ export default function Home() {
 
     return (
         <>
-            <Row>
+            <Row style={{marginTop: '2rem'}}>
                 <Col md={6}>
                     <div style={{ textAlign: 'center' }}>
-                        <img src={slika} />
+                        <img src={slika} style={{maxWidth: '400px'}}/>
                     </div>
                     <p className="lead m-5 text-center">Dobrodošli na {IME_APLIKACIJE}</p>
-                    <div style={{ maxWidth: '500px', margin: 'auto' }}>
-                        <DotLottieReact
-                            src="/AISpark_InteractiveAssistant.lottie"
-                            loop
-                            autoplay
-                        />
-                    </div>
+                    
                 </Col>
 
                 <Col className="d-flex align-items-center justify-content-center">
