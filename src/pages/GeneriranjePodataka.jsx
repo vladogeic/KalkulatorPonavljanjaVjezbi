@@ -71,7 +71,7 @@ export default function GeneriranjePodataka() {
             const trening = {
                 naziv: 'Trening ' + i,   
                 korisnik: randomKorisnik.sifra,
-                vjezbe: [1,2]
+                vjezbe: [{vjezba:1,tezina:75,ponavljanja:10},{vjezba:6,tezina:null,ponavljanja:50}]
             };
             
             await TreningService.dodaj(trening);

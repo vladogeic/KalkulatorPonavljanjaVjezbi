@@ -17,23 +17,26 @@ export default function TreningNovi() {
     const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
 
+    const [tezina, setTezina] = useState('')
+    const [ponavljanja, setPonavljanja] = useState('')
+
     useEffect(() => {
         ucitajKorisnike()
         ucitajVjezbe();
     }, [])
 
     async function ucitajVjezbe() {
-            await VjezbaService.get().then((odgovor) => {
-    
-                            if(!odgovor.success){
-                    alert('Nije implementiran servis')
-                    return
-                }
-    
-    
-                setVjezbe(odgovor.data)
-            })
-        }
+        await VjezbaService.get().then((odgovor) => {
+
+            if (!odgovor.success) {
+                alert('Nije implementiran servis')
+                return
+            }
+
+
+            setVjezbe(odgovor.data)
+        })
+    }
 
     async function ucitajKorisnike() {
         await KorisnikService.get().then((odgovor) => {
@@ -48,7 +51,10 @@ export default function TreningNovi() {
 
     function dodajVjezbu(vjezba) {
         if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
-            setOdabraneVjezbe([...odabraneVjezbe, {vjezba: vjezba, tezina: 10, ponavljanja: 10}])
+            setOdabraneVjezbe([...odabraneVjezbe, { 
+                vjezba: vjezba, 
+                tezina: parseInt(tezina), 
+                ponavljanja: parseInt(ponavljanja)}])
         }
         setPretragaVjezbe('')
         setPrikaziAutocomplete(false)
@@ -125,7 +131,10 @@ export default function TreningNovi() {
         dodaj({
             naziv: podaci.get('naziv'),
             korisnik: odabraniKorisnik,
-            vjezbe: odabraneVjezbe.map(p => p.sifra)
+            vjezbe: odabraneVjezbe.map(p => ({
+                vjezba: p.vjezba.sifra,
+                tezina: p.tezina,
+                ponavljanja: p.ponavljanja}))
 
         })
     }
@@ -135,8 +144,8 @@ export default function TreningNovi() {
             <h3>Unos novog treninga</h3>
             <Form onSubmit={odradiSubmit}>
                 <Container className="mt-4">
-                    
-         <Row>
+
+                    <Row>
                         {/* Lijeva strana - Podaci o grupi */}
                         <Col md={6}>
                             <Card className="shadow-sm">
@@ -146,9 +155,9 @@ export default function TreningNovi() {
 
 
 
-                            {/* Naziv */}
-                            
-                            
+                                    {/* Naziv */}
+
+
                                     <Form.Group controlId="naziv" className="mb-3">
                                         <Form.Label className="fw-bold">Naziv</Form.Label>
                                         <Form.Control
@@ -171,7 +180,7 @@ export default function TreningNovi() {
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
-                                
+
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -186,7 +195,30 @@ export default function TreningNovi() {
                                     <Form.Group className="mb-3 position-relative">
                                         <Form.Label className="fw-bold">Dodaj vjezbu</Form.Label>
                                         <br />
-                                        OVDJE stavi dva unosna polja (težina i ponavljanja)
+                                        <Row>
+                                            <Col>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Težina (npr. 10 za 10 kg)"
+                                                    value={tezina}
+                                                    onChange={(e) => {
+                                                        setTezina(e.target.value)
+                                                    }}
+                                                />
+                                            </Col>
+                                            <Col>
+                                            <Form.Control
+                                                    type="text"
+                                                    placeholder="Broj ponavljanja (npr. 7)"
+                                                    value={ponavljanja}
+                                                    onChange={(e) => {
+                                                        setPonavljanja(e.target.value)
+                                                    }}
+                                                />
+                                            </Col>
+                                        </Row>
+
+                                        <hr />
                                         <Form.Control
                                             type="text"
                                             placeholder="Pretraži vježbu..."
@@ -215,7 +247,7 @@ export default function TreningNovi() {
                                                             setOdabraniIndex(index)
                                                         }}
                                                     >
-                                                        {vjezba.naziv} 
+                                                        {vjezba.naziv}
                                                     </div>
                                                 ))}
                                             </div>
@@ -224,7 +256,7 @@ export default function TreningNovi() {
 
                                     {/* Tablica odabranih vježbi */}
                                     {odabraneVjezbe.length > 0 && (
-                                        <div style={{overflow: 'auto', maxHeight: '300px'}}>
+                                        <div style={{ overflow: 'auto', maxHeight: '300px' }}>
                                             <Table striped bordered hover size="sm">
                                                 <thead>
                                                     <tr>
