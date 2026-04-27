@@ -48,7 +48,7 @@ export default function TreningNovi() {
 
     function dodajVjezbu(vjezba) {
         if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
-            setOdabraneVjezbe([...odabraneVjezbe, vjezba])
+            setOdabraneVjezbe([...odabraneVjezbe, {vjezba: vjezba, tezina: 10, ponavljanja: 10}])
         }
         setPretragaVjezbe('')
         setPrikaziAutocomplete(false)
@@ -56,13 +56,13 @@ export default function TreningNovi() {
     }
 
     function ukloniVjezbu(sifra) {
-        setOdabraneVjezbe(odabraneVjezbe.filter(p => p.sifra !== sifra))
+        setOdabraneVjezbe(odabraneVjezbe.filter(p => p.vjezba.sifra !== sifra))
     }
 
     function filtrirajVjezbe() {
         if (!pretragaVjezbe) return []
         return vjezbe.filter(p =>
-            !odabraneVjezbe.find(op => op.sifra === p.sifra) &&
+            !odabraneVjezbe.find(op => op.vjezba.sifra === p.sifra) &&
             (p.naziv.toLowerCase().includes(pretragaVjezbe.toLowerCase()))
         )
     }
@@ -185,6 +185,8 @@ export default function TreningNovi() {
                                     {/* Autocomplete pretraga */}
                                     <Form.Group className="mb-3 position-relative">
                                         <Form.Label className="fw-bold">Dodaj vjezbu</Form.Label>
+                                        <br />
+                                        OVDJE stavi dva unosna polja (težina i ponavljanja)
                                         <Form.Control
                                             type="text"
                                             placeholder="Pretraži vježbu..."
@@ -227,18 +229,22 @@ export default function TreningNovi() {
                                                 <thead>
                                                     <tr>
                                                         <th>Vježba</th>
+                                                        <th>Težina</th>
+                                                        <th>Ponavljanja</th>
                                                         <th style={{ width: '80px' }}>Akcija</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {odabraneVjezbe.map(vjezba => (
-                                                        <tr key={vjezba.sifra}>
-                                                            <td>{vjezba.naziv} </td>
+                                                    {odabraneVjezbe.map(e => (
+                                                        <tr key={e.vjezba.sifra}>
+                                                            <td>{e.vjezba.naziv} </td>
+                                                            <td>{e.tezina} </td>
+                                                            <td>{e.ponavljanja} </td>
                                                             <td>
                                                                 <Button
                                                                     variant="danger"
                                                                     size="sm"
-                                                                    onClick={() => ukloniVjezbu(vjezba.sifra)}
+                                                                    onClick={() => ukloniVjezbu(e.vjezba.sifra)}
                                                                 >
                                                                     Obriši
                                                                 </Button>
