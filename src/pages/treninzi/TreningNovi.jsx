@@ -304,8 +304,8 @@ export default function TreningNovi() {
                             Odustani
                         </Link>
                         <Button type="submit" variant="success">
-                            Dodaj novu vježbu
-                        </Button>
+                            Dodaj novi trening
+                                                     </Button>
                     </div>
 
 
