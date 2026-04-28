@@ -60,7 +60,7 @@ export default function TreningPregled(){
         <>
         <Link to={RouteNames.TRENINZI_NOVI}
         className="btn btn-success w-100 my-3">
-            Dodavanje novi treninzi
+            Dodavanje novog treninga
         </Link>
         <Table striped bordered hover>
             <thead>

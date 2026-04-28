@@ -18,6 +18,10 @@ export default function TreningPromjena(){
     const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
 
+    const [tezina, setTezina] = useState('')
+    const [ponavljanja, setPonavljanja] = useState('')
+
+
     useEffect(()=>{
         ucitajTrening()
         ucitajKorisnici()
@@ -26,8 +30,11 @@ export default function TreningPromjena(){
 
        useEffect(() => {
         if (trening.vjezbe && vjezbe.length > 0) {
-            const odabrani = vjezbe.filter(p =>trening.vjezbe.includes(p.sifra))
-            setOdabraneVjezbe(odabrani)
+            const odabrani = vjezbe.filter(p => 
+                trening.vjezbe.map(v => v.sifra === p.sifra)
+            );
+            //console.table(odabrani)
+            setOdabraneVjezbe(trening.vjezbe)
         }
     }, [trening, vjezbe])
 
@@ -43,12 +50,12 @@ export default function TreningPromjena(){
     }
 
     async function ucitajKorisnici() {
-        await VjezbaService.get().then((odgovor) => {
+        await KorisnikService.get().then((odgovor) => {
             if (!odgovor.success) {
                 alert('Nije implementiran servis za vjezbe')
                 return
             }
-            setVjezbe(odgovor.data)
+            setKorisnici(odgovor.data)
         })
     }
         async function ucitajVjezbe() {
@@ -63,7 +70,10 @@ export default function TreningPromjena(){
 
     function dodajVjezba(vjezba) {
         if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
-            setOdabraneVjezbe([...odabraneVjezbe, vjezba])
+             setOdabraneVjezbe([...odabraneVjezbe, { 
+                vjezba: vjezba, 
+                tezina: parseInt(tezina), 
+                ponavljanja: parseInt(ponavljanja)}])
         }
         setPretragaVjezbe('')
         setPrikaziAutocomplete(false)
@@ -234,29 +244,33 @@ export default function TreningPromjena(){
                                     {odabraneVjezbe.length > 0 && (
                                         <div style={{overflow: 'auto', maxHeight: '300px'}}>
                                         <Table striped bordered hover size="sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Ime</th>
-                                                    <th style={{width: '80px'}}>Akcija</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {odabraneVjezbe.map(vjezba => (
-                                                    <tr key={vjezba.sifra}>
-                                                        <td>{vjezba.ime} {vjezba.naziv}</td>
-                                                        <td>
-                                                            <Button
-                                                                variant="danger"
-                                                                size="sm"
-                                                                onClick={() => ukloniVjezbu(vjezba.sifra)}
-                                                            >
-                                                                Obriši
-                                                            </Button>
-                                                        </td>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Vježba</th>
+                                                        <th>Težina</th>
+                                                        <th>Ponavljanja</th>
+                                                        <th style={{ width: '80px' }}>Akcija</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </Table>
+                                                </thead>
+                                                <tbody>
+                                                    {odabraneVjezbe.map(e => (
+                                                        <tr key={e.vjezba.sifra}>
+                                                            <td>{e.vjezba.naziv} </td>
+                                                            <td>{e.tezina} </td>
+                                                            <td>{e.ponavljanja} </td>
+                                                            <td>
+                                                                <Button
+                                                                    variant="danger"
+                                                                    size="sm"
+                                                                    onClick={() => ukloniVjezbu(e.vjezba.sifra)}
+                                                                >
+                                                                    Obriši
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </Table>
                                         </div>
                                     )}
                                     {odabraneVjezbe.length === 0 && (
