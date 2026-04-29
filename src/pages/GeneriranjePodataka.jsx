@@ -46,7 +46,7 @@ export default function GeneriranjePodataka() {
             await KorisnikService.dodaj({
                 ime: naziviKorisnika[i % naziviKorisnika.length] + (i >= naziviKorisnika.length ? ` ${Math.floor(i / naziviKorisnika.length) + 1}` : ''),
                 spol: i % 2 === 0 ? 'M' : 'Ž',
-                tezina: faker.number.int({ min: 45, max: 150})
+                tezina: parseInt(faker.number.int({ min: 45, max: 150}))
             });
         }
     };

@@ -52,7 +52,19 @@ export default function TreningPregled(){
     }
 
 
-
+    function izracunaMaksimum(trening){
+        // ako nema težine dizanja, uznmi težinu korisnika
+        // maksimum = težina dizanja * (1 + broj ponavljanja/30)
+        const korisnik = korisnici.find(s => s.sifra === trening.korisnik)
+        let max=0
+        trening.vjezbe.map(v => {
+            if(v.tezina==null){
+                v.tezina = korisnik.tezina
+            }
+            max+= v.tezina * (1 + (v.ponavljanja/30))
+        })
+        return max.toFixed(2)
+    }
 
 
 
@@ -67,6 +79,7 @@ export default function TreningPregled(){
                 <tr>
                     <th>Naziv</th>
                     <th>Korisnik</th>
+                    <th>Maksimum</th>
                     <th>Akcija</th>
                 </tr>
             </thead>
@@ -75,6 +88,9 @@ export default function TreningPregled(){
                     <tr key={trening.sifra}>
                         <td className="lead">{trening.naziv}</td>
                         <td>{dohvatiKorisnikPodaci(trening.korisnik)}</td>
+                        <td>
+                            {izracunaMaksimum(trening)}
+                        </td>
                         <td>
                             <Button onClick={()=>{navigate(`/treninzi/${trening.sifra}`)}}>
                                 Promjeni

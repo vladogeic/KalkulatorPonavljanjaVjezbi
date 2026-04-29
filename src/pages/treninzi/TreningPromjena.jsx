@@ -6,7 +6,7 @@ import VjezbaService from "../../services/vjezbe/VjezbaService"
 import { Button, Col, Form, Row, Container, Card, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 
-export default function TreningPromjena(){
+export default function TreningPromjena() {
 
     const navigate = useNavigate()
     const params = useParams()
@@ -22,26 +22,33 @@ export default function TreningPromjena(){
     const [ponavljanja, setPonavljanja] = useState('')
 
 
-    useEffect(()=>{
+    useEffect(() => {
         ucitajTrening()
         ucitajKorisnici()
         ucitajVjezbe()
-    },[])
+    }, [])
 
-       useEffect(() => {
+    useEffect(() => {
         if (trening.vjezbe && vjezbe.length > 0) {
-            const odabrani = vjezbe.filter(p => 
+            const odabrani = vjezbe.filter(p =>
                 trening.vjezbe.map(v => v.sifra === p.sifra)
             );
-            //console.table(odabrani)
-            setOdabraneVjezbe(trening.vjezbe)
+
+            const spojeniPodaci = trening.vjezbe.map(stavka => {
+                return {
+                    ...stavka,
+                    // Pronalazimo objekt u 'odabrani' čija šifra odgovara ID-u vježbe
+                    vjezba: odabrani.find(o => o.sifra === stavka.vjezba)
+                };
+            });
+            setOdabraneVjezbe(spojeniPodaci)
         }
     }, [trening, vjezbe])
 
 
     async function ucitajTrening() {
-        await TreningService.getBySifra(params.sifra).then((odgovor)=>{
-            if(!odgovor.success){
+        await TreningService.getBySifra(params.sifra).then((odgovor) => {
+            if (!odgovor.success) {
                 alert('Nije implementiran servis')
                 return
             }
@@ -58,7 +65,7 @@ export default function TreningPromjena(){
             setKorisnici(odgovor.data)
         })
     }
-        async function ucitajVjezbe() {
+    async function ucitajVjezbe() {
         await VjezbaService.get().then((odgovor) => {
             if (!odgovor.success) {
                 alert('Nije implementiran servis za vjezbe')
@@ -70,10 +77,11 @@ export default function TreningPromjena(){
 
     function dodajVjezba(vjezba) {
         if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
-             setOdabraneVjezbe([...odabraneVjezbe, { 
-                vjezba: vjezba, 
-                tezina: parseInt(tezina), 
-                ponavljanja: parseInt(ponavljanja)}])
+            setOdabraneVjezbe([...odabraneVjezbe, {
+                vjezba: vjezba,
+                tezina: parseInt(tezina),
+                ponavljanja: parseInt(ponavljanja)
+            }])
         }
         setPretragaVjezbe('')
         setPrikaziAutocomplete(false)
@@ -81,24 +89,24 @@ export default function TreningPromjena(){
     }
 
     function ukloniVjezbu(sifra) {
-        setOdabraneVjezbe(odabraneVjezbe.filter(p => p.sifra !== sifra))
+        setOdabraneVjezbe(odabraneVjezbe.filter(p => p.vjezba.sifra !== sifra))
     }
 
     function filtrirajVjezbe() {
         if (!pretragaVjezbi) return []
-        return vjezbe.filter(p => 
+        return vjezbe.filter(p =>
             !odabraneVjezbe.find(op => op.sifra === p.sifra) &&
-           
-             p.naziv.toLowerCase().includes(pretragaVjezbi.toLowerCase())
+
+            p.naziv.toLowerCase().includes(pretragaVjezbi.toLowerCase())
         )
     }
 
     function handleKeyDown(e) {
         const filtriraneVjezbe = filtrirajVjezbe()
-        
+
         if (e.key === 'ArrowDown') {
             e.preventDefault()
-            setOdabraniIndex(prev => 
+            setOdabraniIndex(prev =>
                 prev < filtriraneVjezbe.length - 1 ? prev + 1 : prev
             )
         } else if (e.key === 'ArrowUp') {
@@ -114,12 +122,12 @@ export default function TreningPromjena(){
     }
 
     async function promjeni(trening) {
-        await TreningService.promjeni(params.sifra,trening).then(()=>{
+        await TreningService.promjeni(params.sifra, trening).then(() => {
             navigate(RouteNames.TRENINZI)
         })
     }
 
-    function odradiSubmit(e){
+    function odradiSubmit(e) {
         e.preventDefault()
         const podaci = new FormData(e.target)
 
@@ -151,23 +159,26 @@ export default function TreningPromjena(){
         promjeni({
             naziv: podaci.get('naziv'),
             korisnik: odabraniKorisnik,
-            vjezbe: odabraneVjezbe.map(p => p.sifra)
+            vjezbe: odabraneVjezbe.map(p => ({
+                vjezba: p.vjezba.sifra,
+                tezina: p.tezina,
+                ponavljanja: p.ponavljanja}))
         })
     }
-    return(
-         <>
+    return (
+        <>
             <h3>Promjena treninga</h3>
             <Form onSubmit={odradiSubmit}>
-                <Container className="mt-4">                    
-                     <Row>
+                <Container className="mt-4">
+                    <Row>
                         {/* Lijeva strana - Podaci o treningu */}
                         <Col md={6}>
                             <Card className="shadow-sm">
                                 <Card.Body>
                                     <Card.Title className="mb-4">Podaci o treningu</Card.Title>
 
-                            {/* Naziv */}                            
-                            
+                                    {/* Naziv */}
+
                                     <Form.Group controlId="naziv" className="mb-3">
                                         <Form.Label className="fw-bold">Naziv</Form.Label>
                                         <Form.Control
@@ -177,13 +188,13 @@ export default function TreningPromjena(){
                                             required
                                             defaultValue={trening.naziv}
                                         />
-                                    </Form.Group>                                                         
+                                    </Form.Group>
 
-                            {/* Korisnik  */}                            
-                            
+                                    {/* Korisnik  */}
+
                                     <Form.Group controlId="korisnik" className="mb-3">
                                         <Form.Label className="fw-bold">Korisnik</Form.Label>
-                                        <Form.Select name="korisnik" required value={trening.korisnik || ''} onChange={(e) => setTrening({...trening, korisnik: parseInt(e.target.value)})}>
+                                        <Form.Select name="korisnik" required value={trening.korisnik || ''} onChange={(e) => setTrening({ ...trening, korisnik: parseInt(e.target.value) })}>
                                             <option value="">Odaberite korisnik</option>
                                             {korisnici && korisnici.map((korisnik) => (
                                                 <option key={korisnik.sifra} value={korisnik.sifra}>
@@ -193,8 +204,8 @@ export default function TreningPromjena(){
                                         </Form.Select>
                                     </Form.Group>
 
-                            </Card.Body>                            </Card>
-                            </Col>
+                                </Card.Body>                            </Card>
+                        </Col>
 
                         {/* Desna strana - Vjezbe */}
                         <Col md={6}>
@@ -205,6 +216,31 @@ export default function TreningPromjena(){
                                     {/* Autocomplete pretraga */}
                                     <Form.Group className="mb-3 position-relative">
                                         <Form.Label className="fw-bold">Dodaj vjezbu</Form.Label>
+                                        <br />
+                                        <Row>
+                                            <Col>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Težina (npr. 10 za 10 kg)"
+                                                    value={tezina}
+                                                    onChange={(e) => {
+                                                        setTezina(e.target.value)
+                                                    }}
+                                                />
+                                            </Col>
+                                            <Col>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Broj ponavljanja (npr. 7)"
+                                                    value={ponavljanja}
+                                                    onChange={(e) => {
+                                                        setPonavljanja(e.target.value)
+                                                    }}
+                                                />
+                                            </Col>
+                                        </Row>
+
+                                        <hr />
                                         <Form.Control
                                             type="text"
                                             placeholder="Pretraži vjezbu..."
@@ -218,7 +254,7 @@ export default function TreningPromjena(){
                                             onKeyDown={handleKeyDown}
                                         />
                                         {prikaziAutocomplete && filtrirajVjezbe().length > 0 && (
-                                            <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{zIndex: 1000, maxHeight: '200px', overflowY: 'auto'}}>
+                                            <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{ zIndex: 1000, maxHeight: '200px', overflowY: 'auto' }}>
                                                 {filtrirajVjezbe().map((vjezba, index) => (
                                                     <div
                                                         key={vjezba.sifra}
@@ -233,7 +269,7 @@ export default function TreningPromjena(){
                                                             setOdabraniIndex(index)
                                                         }}
                                                     >
-                                                         {vjezba.naziv}
+                                                        {vjezba.naziv}
                                                     </div>
                                                 ))}
                                             </div>
@@ -242,8 +278,8 @@ export default function TreningPromjena(){
 
                                     {/* Tablica odabranih vjezbi */}
                                     {odabraneVjezbe.length > 0 && (
-                                        <div style={{overflow: 'auto', maxHeight: '300px'}}>
-                                        <Table striped bordered hover size="sm">
+                                        <div style={{ overflow: 'auto', maxHeight: '300px' }}>
+                                            <Table striped bordered hover size="sm">
                                                 <thead>
                                                     <tr>
                                                         <th>Vježba</th>
@@ -293,7 +329,7 @@ export default function TreningPromjena(){
                         </Button>
                     </div>
 
-                                
+
 
                 </Container>
             </Form>
