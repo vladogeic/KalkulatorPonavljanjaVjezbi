@@ -103,7 +103,7 @@ export default function Home() {
             <Row style={{marginTop: '2rem'}}>
                 <Col md={6}>
                     <div style={{ textAlign: 'center' }}>
-                        <img src={slika} style={{maxWidth: '400px'}}/>
+                        <img src={slika} style={{maxWidth: '450px'}}/>
                     </div>
                     <p className="lead m-5 text-center">Dobrodošli na {IME_APLIKACIJE}</p>
                     
