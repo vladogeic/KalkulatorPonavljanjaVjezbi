@@ -165,6 +165,17 @@ export default function TreningPromjena() {
                 ponavljanja: p.ponavljanja}))
         })
     }
+
+
+    function izracunajMaksimum(){
+        // ako nema težine dizanja, uznmi težinu korisnika
+        // maksimum = težina dizanja * (1 + broj ponavljanja/30)
+        let max=0
+        odabraneVjezbe.map(v => {
+            max+= v.tezina * (1 + (v.ponavljanja/30))
+        })
+        return max.toFixed(2)
+    }
     return (
         <>
             <h3>Promjena treninga</h3>
@@ -203,6 +214,9 @@ export default function TreningPromjena() {
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
+                                    <h1>
+                                        {izracunajMaksimum()}
+                                    </h1>
 
                                 </Card.Body>                            </Card>
                         </Col>
