@@ -209,7 +209,7 @@ export default function TreningPromjena() {
                                             <option value="">Odaberite korisnik</option>
                                             {korisnici && korisnici.map((korisnik) => (
                                                 <option key={korisnik.sifra} value={korisnik.sifra}>
-                                                    {korisnik.ime}
+                                                    {korisnik.ime} ({korisnik.tezina})
                                                 </option>
                                             ))}
                                         </Form.Select>
