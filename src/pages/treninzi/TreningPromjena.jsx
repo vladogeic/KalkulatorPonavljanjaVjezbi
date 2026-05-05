@@ -185,6 +185,33 @@ export default function TreningPromjena() {
         })
         return max.toFixed(2)
     }
+
+    function izracunajZvjezdice(e){
+
+        const korisnik = korisnici.find(s => s.sifra === trening.korisnik)
+
+        // broj ponavljanja - NA OVOME JOŠ TREBA RADITI
+        // 30 je duplo
+        // 10 75 % max
+        // 8 80% max
+
+        const umnozak = e.vjezba.koeficijent * korisnik.tezina
+        //console.log(umnozak, e.tezina)
+        if(e.tezina<=umnozak){
+            return '⭐'
+        }
+        if(e.tezina>umnozak && e.tezina <= (umnozak*1.5)){
+            return '⭐⭐'
+        }
+        if(e.tezina>(umnozak*1.5) && e.tezina <= (umnozak*2)){
+            return '⭐⭐⭐'
+        }
+        if(e.tezina>(umnozak*2) && e.tezina <= (umnozak*2.5)){
+            return '⭐⭐⭐⭐'
+        }
+
+        return '⭐⭐⭐⭐⭐'
+    }
     return (
         <>
             <h3>Promjena treninga</h3>
@@ -308,6 +335,7 @@ export default function TreningPromjena() {
                                                         <th>Vježba</th>
                                                         <th>Težina</th>
                                                         <th>Ponavljanja</th>
+                                                        <th>Koeficijent</th>
                                                         <th style={{ width: '80px' }}>Akcija</th>
                                                     </tr>
                                                 </thead>
@@ -318,6 +346,9 @@ export default function TreningPromjena() {
                                                             <td>{e.vjezba.naziv} </td>
                                                             <td>{e.tezina} </td>
                                                             <td>{e.ponavljanja} </td>
+                                                            <td>
+                                                                {izracunajZvjezdice(e)}
+                                                            </td>
                                                             <td>
                                                                 <Button
                                                                     variant="danger"

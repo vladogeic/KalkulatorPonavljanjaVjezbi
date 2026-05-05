@@ -4,7 +4,7 @@ export const treninzi = [
     {
         sifra: 1,
         naziv: 'Trenig elitne razine',
-        korisnik: 1,
+        korisnik: 6,
         vjezbe: [
             {
                 vjezba: 1,

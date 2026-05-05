@@ -29,5 +29,11 @@ export const korisnici = [
         ime: 'Tomislav',
         spol: 'M',
         tezina: 75
+    },
+    {
+        sifra: 6,
+        ime: 'Mario',
+        spol: 'M',
+        tezina: 100
     }
 ]
