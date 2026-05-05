@@ -76,10 +76,19 @@ export default function TreningPromjena() {
     }
 
     function dodajVjezba(vjezba) {
+        let korisnikTezina;
+        if (!tezina){
+            const korisnik = korisnici.find(s => s.sifra === trening.korisnik)
+
+            korisnikTezina = korisnik.tezina
+        }else{
+            korisnikTezina=parseInt(tezina)
+        }
+
         if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
             setOdabraneVjezbe([...odabraneVjezbe, {
                 vjezba: vjezba,
-                tezina: parseInt(tezina),
+                tezina: korisnikTezina,
                 ponavljanja: parseInt(ponavljanja)
             }])
         }
@@ -206,9 +215,9 @@ export default function TreningPromjena() {
                                     <Form.Group controlId="korisnik" className="mb-3">
                                         <Form.Label className="fw-bold">Korisnik</Form.Label>
                                         <Form.Select name="korisnik" required value={trening.korisnik || ''} onChange={(e) => setTrening({ ...trening, korisnik: parseInt(e.target.value) })}>
-                                            <option value="">Odaberite korisnik</option>
+                                            <option key={'k_0'} value="">Odaberite korisnik</option>
                                             {korisnici && korisnici.map((korisnik) => (
-                                                <option key={korisnik.sifra} value={korisnik.sifra}>
+                                                <option key={'k_'+korisnik.sifra} value={korisnik.sifra}>
                                                     {korisnik.ime} ({korisnik.tezina})
                                                 </option>
                                             ))}
@@ -303,6 +312,7 @@ export default function TreningPromjena() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                   
                                                     {odabraneVjezbe.map(e => (
                                                         <tr key={e.vjezba.sifra}>
                                                             <td>{e.vjezba.naziv} </td>

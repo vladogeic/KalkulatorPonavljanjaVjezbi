@@ -10,7 +10,7 @@ export const vjezbe = [
        // koeficijent  1    x bodyweight = početnički trening       ocijena 1
 
 
-       koeficijent 0.85
+       koeficijent: 0.85
 
 
 
@@ -22,7 +22,7 @@ export const vjezbe = [
         naziv: 'Bench press',
         opis: 'Opis',
        
-        koeficijent: 0,66
+        koeficijent: 0.66
         
 
 
@@ -46,13 +46,13 @@ export const vjezbe = [
         sifra: 5,
         naziv: 'Dips',
         opis: 'Opis',
-        koeficijent: 
+        koeficijent: 0.77
     }
     ,
     {
         sifra: 6,
         naziv: 'Push ups',
         opis: 'Opis',
-        koeficijent: 
+        koeficijent: 0.77
     }
 ]
