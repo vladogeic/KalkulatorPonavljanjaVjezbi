@@ -40,7 +40,7 @@ export default function VjezbaNovi() {
         dodaj({
             naziv: podaci.get('naziv'),
             opis: podaci.get('opis'),
-
+            koeficijent: parseFloat(podaci.get('koeficijent'))
         }
 
         )
@@ -70,6 +70,15 @@ export default function VjezbaNovi() {
                                             name="naziv"
                                             placeholder="Unesite naziv vježbe"
                                             required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="koeficijent" className="mb-3">
+                                        <Form.Label className="fw-bold">Koeficijent</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            name="koeficijent"
+                                            placeholder="0,66"
+                                            step={0.01}
                                         />
                                     </Form.Group>
                                 </Col>

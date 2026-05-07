@@ -55,6 +55,7 @@ export default function VjezbaPregled() {
                 <thead>
                     <tr>
                         <th>Naziv</th>
+                        <th>Koeficijent</th>
                         <th>Opis</th>
                         <th>Akcija</th>
                     </tr>
@@ -64,6 +65,7 @@ export default function VjezbaPregled() {
                         <tr key={vjezba.sifra}>
 
                             <td>{vjezba.naziv} </td>
+                            <td>{vjezba.koeficijent} </td>
                             <td>{vjezba.opis}</td>
                             <td>
                                <Button onClick={()=>{navigate(`/vjezbe/${vjezba.sifra}`)}}>

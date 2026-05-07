@@ -14,7 +14,7 @@ export default function VjezbaPromjena() {
     async function ucitajVjezba() {
         await VjezbaService.getBySifra(params.sifra).then((odgovor) => {
 
-                 if(!odgovor.success){
+            if (!odgovor.success) {
                 alert('Nije implementiran servis')
                 return
             }
@@ -37,7 +37,7 @@ export default function VjezbaPromjena() {
         await VjezbaService.promjeni(params.sifra, vjezba).then(() => {
 
 
-            
+
             navigate(RouteNames.VJEZBE)
         })
 
@@ -47,7 +47,7 @@ export default function VjezbaPromjena() {
         e.preventDefault(); //nemoj odraditi submit
         const podaci = new FormData(e.target)
 
-        
+
         // --- KONTROLA 1: Naziv (Postojanje) ---
         if (!podaci.get('naziv') || podaci.get('naziv').trim().length === 0) {
             alert("Naziv je obavezan i ne smije sadržavati samo razmake!")
@@ -60,44 +60,13 @@ export default function VjezbaPromjena() {
             return // Prekid
         }
 
-        // --- KONTROLA 3: Trajanje (Logički raspon) ---
-        // Provjera je li broj i je li unutar zadanih granica (npr. 1 - 500 sati)
-        if (isNaN(podaci.get('trajanje')) || podaci.get('trajanje') < 1 || podaci.get('trajanje') > 500) {
-            alert("Trajanje mora biti broj između 1 i 500 sati!")
-            return // Prekid
-        }
-
-        if (!podaci.get('cijena') || podaci.get('cijena') === "") {
-            alert("Obavezno cijena smjera!")
-            return
-        }
-
-        // --- KONTROLA 4: Upisnina (Negativne vrijednosti) ---
-        if (podaci.get('cijena') < 0) {
-            alert("Cijena ne može biti negativan broj!")
-            return // Prekid
-        }
-
-        if (!podaci.get('datumPokretanja') || podaci.get('datumPokretanja') === "") {
-            alert("Morate odabrati datum pokretanja!")
-            return
-        }
-
-        // B) Logička provjera: Datum ne smije biti u prošlosti
-        const odabraniDatum = new Date(podaci.get('datumPokretanja'))
-        const danas = new Date()
-        danas.setHours(0, 0, 0, 0) // Resetiramo vrijeme na ponoć radi točne usporedbe datuma
-
-        if (odabraniDatum < danas) {
-            alert("Datum pokretanja ne može biti u prošlosti!")
-            return
-        }
-
+    
 
 
         promjeni({
             naziv: podaci.get('naziv'),
-            opis: parseInt(podaci.get('opis'))
+            opis: podaci.get('opis'),
+            koeficijent: parseFloat(podaci.get('koeficijent'))
         }
 
         )
@@ -113,14 +82,24 @@ export default function VjezbaPromjena() {
             <Form onSubmit={odradiSubmit}>
                 <Form.Group controlId="naziv">
                     <Form.Label>Naziv</Form.Label>
-                    <Form.Control type="text" name="naziv" required 
-                    defaultValue = {vjezba.naziv} />
+                    <Form.Control type="text" name="naziv" required
+                        defaultValue={vjezba.naziv} />
 
+                </Form.Group>
+                <Form.Group controlId="koeficijent" className="mb-3">
+                    <Form.Label className="fw-bold">Koeficijent</Form.Label>
+                    <Form.Control
+                        type="number"
+                        name="koeficijent"
+                        placeholder="0,66"
+                        step={0.01}
+                        defaultValue={vjezba.koeficijent} 
+                    />
                 </Form.Group>
                 <Form.Group controlId="opis">
                     <Form.Label>Opis</Form.Label>
-                    <Form.Control type="text" name="opis" 
-                    defaultValue={vjezba.opis} />
+                    <Form.Control type="text" name="opis"
+                        defaultValue={vjezba.opis} />
 
                 </Form.Group >
 

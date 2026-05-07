@@ -196,7 +196,7 @@ export default function TreningPromjena() {
         // 8 80% max
 
         const umnozak = e.vjezba.koeficijent * korisnik.tezina
-        //console.log(umnozak, e.tezina)
+        //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
         if(e.tezina<=umnozak){
             return '⭐'
         }
@@ -319,7 +319,7 @@ export default function TreningPromjena() {
                                                             setOdabraniIndex(index)
                                                         }}
                                                     >
-                                                        {vjezba.naziv}
+                                                        {vjezba.naziv} ({vjezba.koeficijent})
                                                     </div>
                                                 ))}
                                             </div>
@@ -335,7 +335,7 @@ export default function TreningPromjena() {
                                                         <th>Vježba</th>
                                                         <th>Težina</th>
                                                         <th>Ponavljanja</th>
-                                                        <th>Koeficijent</th>
+                                                        <th>Uspješnost</th>
                                                         <th style={{ width: '80px' }}>Akcija</th>
                                                     </tr>
                                                 </thead>
@@ -343,7 +343,7 @@ export default function TreningPromjena() {
                                                    
                                                     {odabraneVjezbe.map(e => (
                                                         <tr key={e.vjezba.sifra}>
-                                                            <td>{e.vjezba.naziv} </td>
+                                                            <td>{e.vjezba.naziv} ({e.vjezba.koeficijent})</td>
                                                             <td>{e.tezina} </td>
                                                             <td>{e.ponavljanja} </td>
                                                             <td>
