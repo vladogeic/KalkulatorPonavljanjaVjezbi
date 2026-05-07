@@ -194,19 +194,20 @@ export default function TreningPromjena() {
         // 30 je duplo
         // 10 75 % max
         // 8 80% max
+        const maksimum = izracunajMaksimum()
 
         const umnozak = e.vjezba.koeficijent * korisnik.tezina
         //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
-        if(e.tezina<=umnozak){
+        if(maksimum<=umnozak){
             return '⭐'
         }
-        if(e.tezina>umnozak && e.tezina <= (umnozak*1.5)){
+        if(maksimum>umnozak && maksimum <= (umnozak*1.5)){
             return '⭐⭐'
         }
-        if(e.tezina>(umnozak*1.5) && e.tezina <= (umnozak*2)){
+        if(maksimum>(umnozak*1.5) && maksimum <= (umnozak*2)){
             return '⭐⭐⭐'
         }
-        if(e.tezina>(umnozak*2) && e.tezina <= (umnozak*2.5)){
+        if(maksimum>(umnozak*2) && maksimum <= (umnozak*2.5)){
             return '⭐⭐⭐⭐'
         }
 
