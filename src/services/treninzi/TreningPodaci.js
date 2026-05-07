@@ -6,16 +6,7 @@ export const treninzi = [
         naziv: 'Trenig elitne razine',
         korisnik: 6,
         vjezbe: [
-            {
-                vjezba: 1,
-                tezina: 75,
-                ponavljanja: 10
-            },
-            {
-                vjezba: 6,
-                tezina: null, // ako je null uzima se težina korisnika
-                ponavljanja: 50
-            }]
+            ]
     },
     {
         sifra: 2,
