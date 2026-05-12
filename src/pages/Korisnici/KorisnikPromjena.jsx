@@ -93,8 +93,10 @@ export default function KorisnikPromjena(){
 
                 <Form.Group controlId="spol">
                     <Form.Label>Spol</Form.Label>
-                    <Form.Control type="text" name="spol" required 
-                    defaultValue={korisnik.spol}/>
+                    <Form.Select name="spol" value={korisnik.spol} onChange={(e) => setKorisnik({ ...korisnik, spol: e.target.value })} >
+                        <option key={'k_0'} value="M">Muški</option>
+                         <option key={'k_1'} value="Ž">Ženski</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group controlId="tezina">

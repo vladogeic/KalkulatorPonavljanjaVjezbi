@@ -76,7 +76,10 @@ export default function KorisnikNovi(){
 
                 <Form.Group controlId="prezime">
                     <Form.Label>Spol</Form.Label>
-                    <Form.Control type="text" name="spol" required />
+                    <Form.Select name="spol">
+                        <option key={'k_0'} value="M">Muški</option>
+                         <option key={'k_1'} value="Ž">Ženski</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group controlId="tezina">

@@ -77,12 +77,12 @@ export default function TreningPromjena() {
 
     function dodajVjezba(vjezba) {
         let korisnikTezina;
-        if (!tezina){
+        if (!tezina) {
             const korisnik = korisnici.find(s => s.sifra === trening.korisnik)
 
             korisnikTezina = korisnik.tezina
-        }else{
-            korisnikTezina=parseInt(tezina)
+        } else {
+            korisnikTezina = parseInt(tezina)
         }
 
         if (!odabraneVjezbe.find(p => p.sifra === vjezba.sifra)) {
@@ -171,22 +171,23 @@ export default function TreningPromjena() {
             vjezbe: odabraneVjezbe.map(p => ({
                 vjezba: p.vjezba.sifra,
                 tezina: p.tezina,
-                ponavljanja: p.ponavljanja}))
+                ponavljanja: p.ponavljanja
+            }))
         })
     }
 
 
-    function izracunajMaksimum(){
+    function izracunajMaksimum() {
         // ako nema težine dizanja, uznmi težinu korisnika
         // maksimum = težina dizanja * (1 + broj ponavljanja/30)
-        let max=0
+        let max = 0
         odabraneVjezbe.map(v => {
-            max+= v.tezina * (1 + (v.ponavljanja/30))
+            max += v.tezina * (1 + (v.ponavljanja / 30))
         })
         return max.toFixed(2)
     }
 
-    function izracunajZvjezdice(e){
+    function izracunajZvjezdice(e) {
 
         const korisnik = korisnici.find(s => s.sifra === trening.korisnik)
 
@@ -195,60 +196,74 @@ export default function TreningPromjena() {
         // 10 75 % max
         // 8 80% max
         const maksimum = izracunajMaksimum()
-        console.log(korisnik.spol)
-        if(korisnik.spol=='M'){
-            //matemamatika za muške
-        }else{
-            // matematika za žene
+        //console.log(korisnik.spol)
+        if (korisnik.spol == 'M') {
+            const umnozak = e.vjezba.koeficijent * korisnik.tezina
+            //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
+            if (maksimum <= umnozak * 1) {
+                return '⭐'
+            }
+            if (maksimum > umnozak && maksimum <= (umnozak * 1.5)) {
+                return '⭐⭐'
+            }
+            if (maksimum > (umnozak * 1.5) && maksimum <= (umnozak * 2)) {
+                return '⭐⭐⭐'
+            }
+            if (maksimum > (umnozak * 2) && maksimum <= (umnozak * 2.4)) {
+                return '⭐⭐⭐⭐'
+            }
+
+            return '⭐⭐⭐⭐⭐'
         }
 
-      //  Matematika za Muškarce
 
-        const umnozak = e.vjezba.koeficijent * korisnik.tezina
-        //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
-        if(maksimum<=umnozak*1){
-            return '⭐'
-        }
-        if(maksimum>umnozak && maksimum <= (umnozak*1.5)){
-            return '⭐⭐'
-        }
-        if(maksimum>(umnozak*1.5) && maksimum <= (umnozak*2)){
-            return '⭐⭐⭐'
-        }
-        if(maksimum>(umnozak*2) && maksimum <= (umnozak*2.4)){
-            return '⭐⭐⭐⭐'
-        }
+          const umnozak = e.vjezba.koeficijent * korisnik.tezina
+       // console.log(e.vjezba.koeficijent, umnozak, e.tezina)
+          if(maksimum<=umnozak*0.66){
+              return '⭐'
+           }
+         if(maksimum>umnozak && maksimum <= (umnozak*1)){
+             return '⭐⭐'
+          }
+         if(maksimum>(umnozak*1) && maksimum <= (umnozak*1.32)){
+             return '⭐⭐⭐'
+         }
+          if(maksimum>(umnozak*1.32) && maksimum <= (umnozak*1.58)){
+               return '⭐⭐⭐⭐'
+           }
 
-        return '⭐⭐⭐⭐⭐'
+          return '⭐⭐⭐⭐⭐'
+
+
     }
     return (
-      
-      // Matematika za žene
-       //   const umnozak = e.vjezba.koeficijent * korisnik.tezina
-        //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
-     //   if(maksimum<=umnozak*0.66){
-     //       return '⭐'
-    //    }
-      //  if(maksimum>umnozak && maksimum <= (umnozak*1)){
-      //      return '⭐⭐'
-     //   }
-      //  if(maksimum>(umnozak*1) && maksimum <= (umnozak*1.32)){
-      //      return '⭐⭐⭐'
-      //  }
-     //   if(maksimum>(umnozak*1.32) && maksimum <= (umnozak*1.58)){
-    //        return '⭐⭐⭐⭐'
-    //    }
 
-     //   return '⭐⭐⭐⭐⭐'
-  //  }
-   // return (  
-      
-      
-          
-      
-      
-      
-      <>
+        // Matematika za žene
+        //   const umnozak = e.vjezba.koeficijent * korisnik.tezina
+        //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
+        //   if(maksimum<=umnozak*0.66){
+        //       return '⭐'
+        //    }
+        //  if(maksimum>umnozak && maksimum <= (umnozak*1)){
+        //      return '⭐⭐'
+        //   }
+        //  if(maksimum>(umnozak*1) && maksimum <= (umnozak*1.32)){
+        //      return '⭐⭐⭐'
+        //  }
+        //   if(maksimum>(umnozak*1.32) && maksimum <= (umnozak*1.58)){
+        //        return '⭐⭐⭐⭐'
+        //    }
+
+        //   return '⭐⭐⭐⭐⭐'
+        //  }
+        // return (  
+
+
+
+
+
+
+        <>
             <h3>Promjena treninga</h3>
             <Form onSubmit={odradiSubmit}>
                 <Container className="mt-4">
@@ -279,7 +294,7 @@ export default function TreningPromjena() {
                                         <Form.Select name="korisnik" required value={trening.korisnik || ''} onChange={(e) => setTrening({ ...trening, korisnik: parseInt(e.target.value) })}>
                                             <option key={'k_0'} value="">Odaberite korisnik</option>
                                             {korisnici && korisnici.map((korisnik) => (
-                                                <option key={'k_'+korisnik.sifra} value={korisnik.sifra}>
+                                                <option key={'k_' + korisnik.sifra} value={korisnik.sifra}>
                                                     {korisnik.ime} ({korisnik.tezina})
                                                 </option>
                                             ))}
@@ -375,7 +390,7 @@ export default function TreningPromjena() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                   
+
                                                     {odabraneVjezbe.map(e => (
                                                         <tr key={e.vjezba.sifra}>
                                                             <td>{e.vjezba.naziv} ({e.vjezba.koeficijent})</td>
