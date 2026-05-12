@@ -195,10 +195,18 @@ export default function TreningPromjena() {
         // 10 75 % max
         // 8 80% max
         const maksimum = izracunajMaksimum()
+        console.log(korisnik.spol)
+        if(korisnik.spol=='M'){
+            //matemamatika za muške
+        }else{
+            // matematika za žene
+        }
+
+      //  Matematika za Muškarce
 
         const umnozak = e.vjezba.koeficijent * korisnik.tezina
         //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
-        if(maksimum<=umnozak){
+        if(maksimum<=umnozak*1){
             return '⭐'
         }
         if(maksimum>umnozak && maksimum <= (umnozak*1.5)){
@@ -207,14 +215,40 @@ export default function TreningPromjena() {
         if(maksimum>(umnozak*1.5) && maksimum <= (umnozak*2)){
             return '⭐⭐⭐'
         }
-        if(maksimum>(umnozak*2) && maksimum <= (umnozak*2.5)){
+        if(maksimum>(umnozak*2) && maksimum <= (umnozak*2.4)){
             return '⭐⭐⭐⭐'
         }
 
         return '⭐⭐⭐⭐⭐'
     }
     return (
-        <>
+      
+      // Matematika za žene
+       //   const umnozak = e.vjezba.koeficijent * korisnik.tezina
+        //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
+     //   if(maksimum<=umnozak*0.66){
+     //       return '⭐'
+    //    }
+      //  if(maksimum>umnozak && maksimum <= (umnozak*1)){
+      //      return '⭐⭐'
+     //   }
+      //  if(maksimum>(umnozak*1) && maksimum <= (umnozak*1.32)){
+      //      return '⭐⭐⭐'
+      //  }
+     //   if(maksimum>(umnozak*1.32) && maksimum <= (umnozak*1.58)){
+    //        return '⭐⭐⭐⭐'
+    //    }
+
+     //   return '⭐⭐⭐⭐⭐'
+  //  }
+   // return (  
+      
+      
+          
+      
+      
+      
+      <>
             <h3>Promjena treninga</h3>
             <Form onSubmit={odradiSubmit}>
                 <Container className="mt-4">

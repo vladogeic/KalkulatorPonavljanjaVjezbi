@@ -34,7 +34,7 @@ export const vjezbe = [
         sifra: 3,
         naziv: 'Shoulder press',
         opis: 'Opis',
-        koeficijent: 0.42
+        koeficijent: 0.50
     },
     {
         sifra: 4,
@@ -47,13 +47,13 @@ export const vjezbe = [
         sifra: 5,
         naziv: 'Pull ups',
         opis: 'Opis',
-        koeficijent: 0.75
+        koeficijent: 0.72
     }
     ,
     {
         sifra: 6,
         naziv: 'Push ups',
         opis: 'Opis',
-        koeficijent: 0.77
+        koeficijent: 1.42
     }
 ]
