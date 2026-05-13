@@ -56,7 +56,7 @@ export const vjezbe = [
         sifra: 7,
         naziv: 'Barbell curl',
         opis: 'Opis',
-        koeficijent: 1.42
+        koeficijent: 0.33
     }
 ]
 
