@@ -5,6 +5,9 @@ import { Faker, hr } from '@faker-js/faker';
 import KorisnikService from '../services/korisnici/KorisnikService';
 import VjezbaService from '../services/vjezbe/VjezbaService';
 import TreningService from '../services/treninzi/TreningService';
+import vjezbeMemorija from '../services/vjezbe/VjezbaPodaci'
+import korisniciMemorija from '../services/korisnici/KorisnikPodaci'
+import treninziMemorija from '../services/treninzi/TreningPodaci'
 
 
 export default function GeneriranjePodataka() {
@@ -240,6 +243,35 @@ export default function GeneriranjePodataka() {
         }
     };
 
+    function handlePresipajPodatke(){
+        if (!window.confirm('Jeste li sigurni da želite pretočiti iz memorije u localStorage?')) {
+            return;
+        }
+
+        setLoading(true);
+        setPoruka(null);
+
+        try {
+
+            localStorage.setItem('vjezbe', JSON.stringify(vjezbeMemorija.vjezbe));
+            localStorage.setItem('korisnici', JSON.stringify(korisniciMemorija.korisnici));
+            localStorage.setItem('treninzi', JSON.stringify(treninziMemorija.treninzi));
+            
+
+            setPoruka({
+                tip: 'success',
+                tekst: `Uspješno presipano`
+            });
+        } catch (error) {
+            setPoruka({
+                tip: 'danger',
+                tekst: 'Greška pri presipavanju memorija - localStorage: ' + error.message
+            });
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <Container className="mt-4">
             <h1>Generiranje podataka</h1>
@@ -384,6 +416,15 @@ export default function GeneriranjePodataka() {
             <Alert variant="danger" className="mt-3">
                 <strong>Oprez!</strong> Brisanje podataka je trajna akcija i ne može se poništiti.
             </Alert>
+
+            <Button 
+                        variant="warning" 
+                        onClick={handlePresipajPodatke}
+                        disabled={loading}
+                        className="w-100 mb-2"
+                    >
+                        {loading ? 'Presipavanje...' : 'Presipaj sve podatke'}
+                    </Button>
         </Container>
     );
 }

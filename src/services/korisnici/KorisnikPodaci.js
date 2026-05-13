@@ -37,3 +37,7 @@ export const korisnici = [
         tezina: 100
     }
 ]
+
+export default{
+    korisnici
+}

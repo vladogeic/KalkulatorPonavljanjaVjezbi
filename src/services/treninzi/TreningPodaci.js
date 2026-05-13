@@ -72,3 +72,7 @@ export const treninzi = [
             }]
     }
 ]
+
+export default{
+    treninzi
+}

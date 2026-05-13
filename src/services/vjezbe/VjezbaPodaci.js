@@ -59,3 +59,8 @@ export const vjezbe = [
         koeficijent: 1.42
     }
 ]
+
+
+export default{
+    vjezbe
+}
