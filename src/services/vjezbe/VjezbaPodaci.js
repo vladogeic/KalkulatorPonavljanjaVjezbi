@@ -3,15 +3,8 @@ export const vjezbe = [
         sifra: 1,
         naziv: 'Squat',
         opis: 'Opis',
-       // koeficijent: 3    x bodyweight = Trening elitne razine    ocijena 5
-       // koeficijent  2,5  x bodyweight = Napredni trening         ocijena 4   
-      //  koeficijent  2    x bodyweight = Trening srednje razine   ocijena 3
-       // koeficijent  1,5  x bodyweight = Jača početnička razina   ocijena 2
-       // koeficijent  1    x bodyweight = početnički trening       ocijena 1
-       
-
-
-       koeficijent: 0.85
+        
+        koeficijent: 0.85
 
 
 
@@ -50,9 +43,18 @@ export const vjezbe = [
         koeficijent: 0.72
     }
     ,
+    
     {
         sifra: 6,
         naziv: 'Push ups',
+        opis: 'Opis',
+        koeficijent: 1.42
+    }
+    
+    ,
+    {
+        sifra: 7,
+        naziv: 'Barbell curl',
         opis: 'Opis',
         koeficijent: 1.42
     }
