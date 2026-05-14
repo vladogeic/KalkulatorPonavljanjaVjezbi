@@ -16,7 +16,7 @@ export const vjezbe = [
         naziv: 'Bench press',
         opis: 'Opis',
        
-        koeficijent: 0.63
+        koeficijent: 0.62
         
 
 

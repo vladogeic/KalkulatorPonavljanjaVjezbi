@@ -200,16 +200,16 @@ export default function TreningPromjena() {
         if (korisnik.spol == 'M') {
             const umnozak = e.vjezba.koeficijent * korisnik.tezina
             //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
-            if (maksimum <= umnozak * 1) {
+            if (maksimum <= umnozak * 1.5) {
                 return '⭐'
             }
-            if (maksimum > umnozak && maksimum <= (umnozak * 1.5)) {
+            if (maksimum > (umnozak *1.5) && maksimum <= (umnozak * 2)) {
                 return '⭐⭐'
             }
-            if (maksimum > (umnozak * 1.5) && maksimum <= (umnozak * 2)) {
+            if (maksimum > (umnozak * 2) && maksimum <= (umnozak * 2.5)) {
                 return '⭐⭐⭐'
             }
-            if (maksimum > (umnozak * 2) && maksimum <= (umnozak * 2.4)) {
+            if (maksimum > (umnozak * 2.5) && maksimum <= (umnozak * 3)) {
                 return '⭐⭐⭐⭐'
             }
 
@@ -219,16 +219,16 @@ export default function TreningPromjena() {
 
           const umnozak = e.vjezba.koeficijent * korisnik.tezina
        // console.log(e.vjezba.koeficijent, umnozak, e.tezina)
-          if(maksimum<=umnozak*0.66){
+          if(maksimum<=umnozak*1){
               return '⭐'
            }
-         if(maksimum>umnozak && maksimum <= (umnozak*1)){
+         if(maksimum>umnozak*1 && maksimum <= (umnozak*1.32)){
              return '⭐⭐'
           }
-         if(maksimum>(umnozak*1) && maksimum <= (umnozak*1.32)){
+         if(maksimum>(umnozak*1.32) && maksimum <= (umnozak*1.58)){
              return '⭐⭐⭐'
          }
-          if(maksimum>(umnozak*1.32) && maksimum <= (umnozak*1.58)){
+          if(maksimum>(umnozak*1.58) && maksimum <= (umnozak*2)){
                return '⭐⭐⭐⭐'
            }
 
@@ -238,26 +238,7 @@ export default function TreningPromjena() {
     }
     return (
 
-        // Matematika za žene
-        //   const umnozak = e.vjezba.koeficijent * korisnik.tezina
-        //console.log(e.vjezba.koeficijent, umnozak, e.tezina)
-        //   if(maksimum<=umnozak*0.66){
-        //       return '⭐'
-        //    }
-        //  if(maksimum>umnozak && maksimum <= (umnozak*1)){
-        //      return '⭐⭐'
-        //   }
-        //  if(maksimum>(umnozak*1) && maksimum <= (umnozak*1.32)){
-        //      return '⭐⭐⭐'
-        //  }
-        //   if(maksimum>(umnozak*1.32) && maksimum <= (umnozak*1.58)){
-        //        return '⭐⭐⭐⭐'
-        //    }
-
-        //   return '⭐⭐⭐⭐⭐'
-        //  }
-        // return (  
-
+        
 
 
 
